@@ -1,10 +1,6 @@
-const { readGitignoreFiles } = require("eslint-gitignore");
-
-const gitignore = readGitignoreFiles({ cwd: __dirname });
-
 module.exports = {
   root: true,
-  ignorePatterns: [...gitignore, ".*lintrc.{js,ts}"],
+  ignorePatterns: [".gitignore", ".*lintrc.{js,ts}"],
   env: { browser: true, es2020: true, jest: true },
   extends: [
     "next/core-web-vitals",
