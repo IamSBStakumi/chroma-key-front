@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# React Component Tests
 
-## Getting Started
+## About
 
-First, run the development server:
+Sample implementation of various test cases in React.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Languages
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Next.js](https://img.shields.io/badge/-Nextjs-000000.svg?logo=nextdotjs&style=plastic)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![Typescript](https://img.shields.io/badge/-Typescript-007ACC.svg?logo=typescript&style=plastic)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+![Jest](https://img.shields.io/badge/-Jest-DDBBEE.svg?logo=jest&style=plastic)
 
-## Learn More
+![Testing-Library](https://img.shields.io/badge/-TestingLibrary-045633.svg?logo=testing-library&style=plastic)
 
-To learn more about Next.js, take a look at the following resources:
+![Eslint](https://img.shields.io/badge/-Eslint-339933.svg?logo=eslint&style=plastic)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Prettier](https://img.shields.io/badge/-Prettier-3749CE.svg?logo=prettier&style=plastic)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![pre-commit](https://img.shields.io/badge/-precommit-AB49CE.svg?logo=precommit&style=plastic)
