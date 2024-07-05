@@ -1,22 +1,28 @@
 "use client";
 
+import { useState } from "react";
+
 /* eslint-disable no-alert */
 export default function Home() {
+  const [image, setImage] = useState<File | null>(null);
+  const [movie, setMovie] = useState<File | null>(null);
+
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const input = e.target.files;
-    if (input == null) return;
-    else if (input.length !== 1) {
+    if (input == null) {
+      return;
+    } else if (input.length !== 1) {
       window.alert("ファイルは一枚にしてください。");
 
       return;
     }
     const file = input[0] as File;
-    console.log(file);
 
     if (file.type.match(".png" || "jpeg")) {
-      console.log("画像がアップロードされました。");
+      setImage(file);
+      console.log(image);
 
       return;
     }
@@ -37,7 +43,8 @@ export default function Home() {
     }
     const file = input[0] as File;
     if (file.type.match("video.mp4")) {
-      console.log("動画がアップロードされました。");
+      setMovie(file);
+      console.log(movie);
 
       return;
     }
