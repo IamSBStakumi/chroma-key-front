@@ -1,56 +1,53 @@
 "use client";
 
 import { useState } from "react";
+import DefaultModal from "@/components/ModalComponents";
 
-/* eslint-disable no-alert */
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [movie, setMovie] = useState<File | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
+  const openModal = (message: string) => {
+    setModalMessage(message);
+    setModalIsOpen(true);
+  };
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const input = e.target.files;
-    if (input == null) {
-      return;
-    } else if (input.length !== 1) {
-      window.alert("ファイルは一枚にしてください。");
-
-      return;
-    }
+    console.log(input);
+    if (!input || !input.length) return;
     const file = input[0] as File;
-
-    if (file.type.match(".png" || "jpeg")) {
-      setImage(file);
-      console.log(image);
+    if (!file.type.match(".png" || "jpeg")) {
+      openModal("アップロードできるのは画像のみです。");
 
       return;
     }
-    window.alert("アップロードできるのは画像のみです。");
-
-    return;
+    setImage(file);
+    console.log(image);
   };
 
   const handleChangeMovie = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const input = e.target.files;
-    if (input == null) return;
-    else if (input.length !== 1) {
-      window.alert("ファイルは一つにしてください。");
-
-      return;
-    }
+    if (!input || !input.length) return;
     const file = input[0] as File;
-    if (file.type.match("video.mp4")) {
-      setMovie(file);
-      console.log(movie);
+    if (!file.type.match("video.mp4")) {
+      openModal("アップロードできるのは動画のみです。");
 
       return;
     }
-    window.alert("アップロードできるのは動画のみです。");
+    setMovie(file);
+    console.log(movie);
+  };
 
-    return;
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setModalMessage("");
   };
 
   return (
@@ -59,7 +56,7 @@ export default function Home() {
         <label>背景画像</label>
         <input
           type="file"
-          accept=".png, .jpeg"
+          accept=".png, .jpeg, .jpg"
           onChange={(e) => {
             handleChangeImage(e);
           }}
@@ -73,6 +70,7 @@ export default function Home() {
           }}
         />
       </div>
+      <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );
 }
