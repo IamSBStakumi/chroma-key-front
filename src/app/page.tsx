@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
+import PreviewImage from "@/components/PreviewImage";
+import PreviewVideo from "@/components/PreviewVideo";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -20,23 +22,24 @@ export default function Home() {
     setModalMessage("");
   };
 
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setImage(null);
 
     const input = e.target.files;
     if (!input || !input.length) return;
     const file = input[0] as File;
-    if (!file.type.match(".png" || "jpeg")) {
+    if (file.type !== "image/png" && file.type !== "image/jpeg") {
       openModal("アップロードできるのは画像のみです。");
 
       return;
     }
     setImage(file);
-    console.log(image);
-  };
+  }, []);
 
-  const handleChangeMovie = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeMovie = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setMovie(null);
 
     const input = e.target.files;
     if (!input || !input.length) return;
@@ -47,33 +50,38 @@ export default function Home() {
       return;
     }
     setMovie(file);
-    console.log(movie);
-  };
+  }, []);
 
   return (
     <main>
+      <Explanation />
       <div>
-        <Explanation />
-        <form>
-          <label>背景画像</label>
-          <input
-            type="file"
-            accept=".png, .jpeg, .jpg"
-            onChange={(e) => {
-              handleChangeImage(e);
-            }}
-          />
-          <label>合成する動画</label>
-          <input
-            type="file"
-            accept=".mp4"
-            onChange={(e) => {
-              handleChangeMovie(e);
-            }}
-          />
-          <button>合成開始</button>
-        </form>
+        <ul>
+          <li>
+            <label>背景画像</label>
+            <input
+              type="file"
+              accept=".png, .jpeg, .jpg"
+              onChange={(e) => {
+                handleChangeImage(e);
+              }}
+            />
+          </li>
+          <li>
+            <label>合成する動画</label>
+            <input
+              type="file"
+              accept=".mp4"
+              onChange={(e) => {
+                handleChangeMovie(e);
+              }}
+            />
+          </li>
+        </ul>
+        <button>合成開始</button>
       </div>
+      <PreviewImage file={image} />
+      <PreviewVideo file={movie} />
       <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );
