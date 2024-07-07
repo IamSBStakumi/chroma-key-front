@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
+import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 
@@ -37,7 +38,7 @@ export default function Home() {
     setImage(file);
   }, []);
 
-  const handleChangeMovie = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeVideo = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setMovie(null);
 
@@ -55,31 +56,7 @@ export default function Home() {
   return (
     <main>
       <Explanation />
-      <div>
-        <ul>
-          <li>
-            <label>背景画像</label>
-            <input
-              type="file"
-              accept=".png, .jpeg, .jpg"
-              onChange={(e) => {
-                handleChangeImage(e);
-              }}
-            />
-          </li>
-          <li>
-            <label>合成する動画</label>
-            <input
-              type="file"
-              accept=".mp4"
-              onChange={(e) => {
-                handleChangeMovie(e);
-              }}
-            />
-          </li>
-        </ul>
-        <button>合成開始</button>
-      </div>
+      <UploadForm handleChangeImage={handleChangeImage} handleChangeVideo={handleChangeVideo} />
       <PreviewImage file={image} />
       <PreviewVideo file={movie} />
       <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
