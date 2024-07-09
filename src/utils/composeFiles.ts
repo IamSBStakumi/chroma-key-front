@@ -1,8 +1,18 @@
 "use client";
 
-const composeFiles = (formData: FormData) => {
-  const image = formData.get("image") as File;
-  const video = formData.get("video") as File;
+import axios from "axios";
+
+const composeFiles = async (image: File, video: File) => {
+  const formData = new FormData();
+  formData.append("image", image);
+  formData.append("video", video);
+  const response = await axios.post(`/api/compose`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response;
 };
 
 export default composeFiles;
