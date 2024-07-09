@@ -20,7 +20,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
   // const { image, video }: { image: File; video: File } = await request.json();
   // console.log(image, video);
   await axios
-    .post(`http://localhost:8080`, req, {
+    .post(`http://localhost:8080/compose`, req, {
       headers: req.headers,
     })
     .then((response) => {
