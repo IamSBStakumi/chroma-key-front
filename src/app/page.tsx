@@ -6,10 +6,11 @@ import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
+import composeFiles from "@/utils/composeFiles";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
-  const [movie, setMovie] = useState<File | null>(null);
+  const [video, setMovie] = useState<File | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
@@ -53,12 +54,28 @@ export default function Home() {
     setMovie(file);
   }, []);
 
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (image === null || video === null) {
+      openModal("画像または動画がアップロードされていません");
+
+      return;
+    }
+    const response = await composeFiles(image, video);
+
+    return response;
+  };
+
   return (
     <main>
       <Explanation />
-      <UploadForm handleChangeImage={handleChangeImage} handleChangeVideo={handleChangeVideo} />
+      <UploadForm
+        handleChangeImage={handleChangeImage}
+        handleChangeVideo={handleChangeVideo}
+        handleSubmit={handleSubmit}
+      />
       <PreviewImage file={image} />
-      <PreviewVideo file={movie} />
+      <PreviewVideo file={video} />
       <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );
