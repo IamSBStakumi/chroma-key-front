@@ -13,6 +13,7 @@ export default function Home() {
   const [video, setMovie] = useState<File | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   const openModal = (message: string) => {
     setModalMessage(message);
@@ -63,7 +64,7 @@ export default function Home() {
     }
     const response = await composeFiles(image, video);
 
-    return response;
+    setVideoUrl(response);
   };
 
   return (
@@ -76,6 +77,14 @@ export default function Home() {
       />
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
+      {videoUrl && (
+        <div>
+          <a href={videoUrl} download="processed_video.mp4">
+            ダウンロード
+          </a>
+          <video controls src={videoUrl} />
+        </div>
+      )}
       <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );
