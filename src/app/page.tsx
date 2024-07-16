@@ -11,6 +11,7 @@ import composeFiles from "@/utils/composeFiles";
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
+  const [isFetching, setFetching] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -62,8 +63,10 @@ export default function Home() {
 
       return;
     }
+    setFetching(true);
     const response = await composeFiles(image, video);
 
+    setFetching(false);
     setVideoUrl(response);
   };
 
@@ -77,6 +80,13 @@ export default function Home() {
       />
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
+      {isFetching && (
+        <h1>
+          動画を合成中です
+          <br />
+          この処理には時間がかかることがあります
+        </h1>
+      )}
       {videoUrl && (
         <div>
           <a href={videoUrl} download="processed_video.mp4">
