@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import getIdTokenFromMetadataServer from "@/utils/getIdTokenFromMetadataServer";
 
-export const GET = async () => {
-  const url = `http://localhost:8080`;
+const url = /* `http://localhost:8080` */ `https://chroma-key-api-spbb34bsma-dt.a.run.app`;
 
+export const GET = async () => {
   const res = await fetch(url);
   const message = await res.json();
 
@@ -15,14 +15,10 @@ export async function POST(req: NextRequest) {
   try {
     const token = getIdTokenFromMetadataServer();
     const formData = await req.formData();
-    const response = await axios.post(
-      /* `http://localhost:8080/compose` */ `https://chroma-key-api-spbb34bsma-dt.a.run.app/compose`,
-      formData,
-      {
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
-        responseType: "stream",
-      },
-    );
+    const response = await axios.post(`${url}/compose`, formData, {
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
+      responseType: "stream",
+    });
 
     return new NextResponse(response.data, {
       status: 200,
