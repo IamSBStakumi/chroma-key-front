@@ -15,7 +15,6 @@ module.exports = {
   rules: {
     "no-alert": "error",
     "no-console": ["warn", { allow: ["error"] }], // console.error以外のconsole呼び出しについて警告を出す
-    "no-unused-vars": ["warn"], // 未使用の変数に対して警告を出す
     "no-plusplus": ["error", { allowForLoopAfterthoughts: true }], // ループ処理の単項演算子は許可する
     "react/jsx-props-no-spreading": ["off"], // propsを渡すときにスプレッド構文の使用を禁止しない
     "react/prop-types": "off", // コンポーネントにpropTypesプロパティの設定を強制しない

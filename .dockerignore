@@ -17,3 +17,9 @@ jest.setup.ts
 
 # ログファイル
 yarn-error.log*
+
+# シークレットキー
+chroma-key-secret.json
+
+# .env
+.env.local

@@ -36,3 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 .swc
+
+# secret-key
+chroma-key-secret.json

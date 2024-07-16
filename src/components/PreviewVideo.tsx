@@ -10,7 +10,7 @@ type PreviewProps = {
 
 const StyledVideo = styled.video`
   margin: auto;
-  width: 80%;
+  width: 300px;
 `;
 
 const PreviewVideo: FC<PreviewProps> = ({ file }) => {
