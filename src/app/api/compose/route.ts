@@ -13,10 +13,14 @@ export const GET = async () => {
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const response = await axios.post(`http://localhost:8080/compose`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-      responseType: "stream",
-    });
+    const response = await axios.post(
+      /* `http://localhost:8080/compose` */ `https://chroma-key-api-spbb34bsma-dt.a.run.app/compose`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+        responseType: "stream",
+      },
+    );
 
     return new NextResponse(response.data, {
       status: 200,
