@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import getIdTokenFromMetadataServer from "@/utils/getIdTokenFromMetadataServer";
 
 export const GET = async () => {
   const url = `http://localhost:8080`;
@@ -12,12 +13,13 @@ export const GET = async () => {
 
 export async function POST(req: NextRequest) {
   try {
+    const token = getIdTokenFromMetadataServer();
     const formData = await req.formData();
     const response = await axios.post(
       /* `http://localhost:8080/compose` */ `https://chroma-key-api-spbb34bsma-dt.a.run.app/compose`,
       formData,
       {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
         responseType: "stream",
       },
     );
