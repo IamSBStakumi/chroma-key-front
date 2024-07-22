@@ -11,6 +11,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        <title>Greenback Chroma key</title>
+      </head>
       <body>
         <StyledComponentsRegistry>
           <GlobalStyle />
