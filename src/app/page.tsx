@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
@@ -11,10 +12,15 @@ import composeFiles from "@/utils/composeFiles";
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
-  const [isFetching, setFetching] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+
+  const mutation = useMutation({
+    mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
+    onMutate: () => setVideoUrl(""),
+    onSuccess: (response) => setVideoUrl(response),
+  });
 
   const openModal = (message: string) => {
     setModalMessage(message);
@@ -63,11 +69,7 @@ export default function Home() {
 
       return;
     }
-    setFetching(true);
-    const response = await composeFiles(image, video);
-
-    setFetching(false);
-    setVideoUrl(response);
+    mutation.mutate({ image: image, video: video });
   };
 
   return (
@@ -80,7 +82,7 @@ export default function Home() {
       />
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
-      {isFetching && (
+      {mutation.isPending && (
         <h1>
           動画を合成中です
           <br />
