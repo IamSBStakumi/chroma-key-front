@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
@@ -21,6 +21,36 @@ export default function Home() {
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => setVideoUrl(response),
   });
+
+  useEffect(() => {
+    const connectWebSocket = () => {
+      const ws = new WebSocket("ws://localhost:8080/ws");
+      ws.onmessage = (event) => {
+        const e = JSON.parse(event.data);
+        console.log(e);
+      };
+      ws.onclose = () => {
+        setTimeout(connectWebSocket, 10000);
+      };
+
+      return ws;
+    };
+
+    const ws = connectWebSocket();
+    const interval = setInterval(() => {
+      if (ws.readyState === ws.OPEN && mutation.isPending) {
+        ws.send("give progress");
+      } else {
+        clearInterval(interval);
+      }
+    }, 3000);
+
+    return () => {
+      ws.onclose = () => {
+        console.log("ws close");
+      };
+    };
+  }, [mutation.isPending]);
 
   const openModal = (message: string) => {
     setModalMessage(message);
@@ -87,6 +117,7 @@ export default function Home() {
           動画を合成中です
           <br />
           この処理には時間がかかることがあります
+          <br />
         </h1>
       )}
       {videoUrl && (
