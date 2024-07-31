@@ -12,26 +12,26 @@ import composeFiles from "@/utils/composeFiles";
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
+  const [progress, setProgress] = useState<string>("0");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const ws = new WebSocket("ws://localhost:8080/ws");
+  const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
 
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
       setVideoUrl(response);
-      ws.close = () => {
-        console.log("close ws");
-      };
+      ws.close();
+      setProgress("0");
     },
   });
 
   useEffect(() => {
     ws.onmessage = (event) => {
       const e = JSON.parse(event.data);
-      console.log(e);
+      setProgress(e.progress);
     };
     ws.onclose = () => {};
 
@@ -110,6 +110,7 @@ export default function Home() {
           <br />
           この処理には時間がかかることがあります
           <br />
+          進捗率: {progress}%
         </h1>
       )}
       {videoUrl && (
