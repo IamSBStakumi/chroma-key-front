@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useState, useCallback } from "react";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
@@ -12,37 +11,10 @@ import composeFiles from "@/utils/composeFiles";
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
-  const [progress, setProgress] = useState<string>("0");
+  const [isFetching, setFetching] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
-
-  const mutation = useMutation({
-    mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
-    onMutate: () => setVideoUrl(""),
-    onSuccess: (response) => {
-      setVideoUrl(response);
-      ws.close();
-      setProgress("0");
-    },
-  });
-
-  useEffect(() => {
-    ws.onmessage = (event) => {
-      const e = JSON.parse(event.data);
-      setProgress(e.progress);
-    };
-    ws.onclose = () => {};
-
-    const interval = setInterval(() => {
-      if (ws.readyState === ws.OPEN && mutation.isPending) {
-        ws.send("progress");
-      } else {
-        clearInterval(interval);
-      }
-    }, 3000);
-  });
 
   const openModal = (message: string) => {
     setModalMessage(message);
@@ -91,7 +63,11 @@ export default function Home() {
 
       return;
     }
-    mutation.mutate({ image: image, video: video });
+    setFetching(true);
+    const response = await composeFiles(image, video);
+
+    setFetching(false);
+    setVideoUrl(response);
   };
 
   return (
@@ -104,13 +80,11 @@ export default function Home() {
       />
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
-      {mutation.isPending && (
+      {isFetching && (
         <h1>
           動画を合成中です
           <br />
           この処理には時間がかかることがあります
-          <br />
-          進捗率: {progress}%
         </h1>
       )}
       {videoUrl && (
