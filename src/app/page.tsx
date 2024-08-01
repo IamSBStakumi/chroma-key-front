@@ -13,6 +13,7 @@ import composeFiles from "@/utils/composeFiles";
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
+  const [progress, setProgress] = useState("0");
   const [isFetching, setFetching] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -133,6 +134,8 @@ export default function Home() {
           動画を合成中です
           <br />
           この処理には時間がかかることがあります
+          <br />
+          進捗率: {progress}%
         </h1>
       )}
       {videoUrl && (
