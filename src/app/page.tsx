@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
@@ -13,7 +13,6 @@ export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
   const [progress, setProgress] = useState("0");
-  const [isFetching, setFetching] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -27,23 +26,23 @@ export default function Home() {
     },
   });
 
-  useEffect(() => {
-    const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
+  // useEffect(() => {
+  //   const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
 
-    ws.onmessage = (event) => {
-      const e = JSON.parse(event.data);
-      if (e.progress) setProgress(e.progress);
-    };
-    ws.onclose = () => {};
+  //   ws.onmessage = (event) => {
+  //     const e = JSON.parse(event.data);
+  //     if (e.progress) setProgress(e.progress);
+  //   };
+  //   ws.onclose = () => {};
 
-    const interval = setInterval(() => {
-      if (ws.readyState === ws.OPEN && mutation.isPending) {
-        ws.send("progress");
-      } else {
-        clearInterval(interval);
-      }
-    }, 3000);
-  });
+  //   const interval = setInterval(() => {
+  //     if (ws.readyState === ws.OPEN && mutation.isPending) {
+  //       ws.send("progress");
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   }, 3000);
+  // });
 
   const openModal = (message: string) => {
     setModalMessage(message);
@@ -92,11 +91,7 @@ export default function Home() {
 
       return;
     }
-    setFetching(true);
-    const response = await composeFiles(image, video);
-
-    setFetching(false);
-    setVideoUrl(response);
+    mutation.mutate({ image, video });
   };
 
   return (
@@ -109,7 +104,7 @@ export default function Home() {
       />
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
-      {isFetching && (
+      {mutation.isPending && (
         <h1>
           動画を合成中です
           <br />
