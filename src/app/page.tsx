@@ -9,7 +9,6 @@ import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
-// import connectWebSocket from "./WebSocket";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
