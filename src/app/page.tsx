@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
+// import connectWebSocket from "./WebSocket";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -16,21 +18,38 @@ export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
+
+  const {
+    data: token,
+    isLoading,
+    isPending,
+  } = useQuery({
+    queryKey: ["authToken"],
+    queryFn: async () => {
+      const response = await axios("/api/token");
+      console.log(response);
+
+      return response.data.message;
+    },
+  });
 
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
       setVideoUrl(response);
-      ws.close();
       setProgress("0");
     },
   });
 
   useEffect(() => {
+    const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
+
+    ws.onopen = () => {
+      if (token) ws.send(token);
+    };
     ws.onmessage = (event) => {
-      const e = JSON.parse(event.data);
+      const e = JSON.parse(event.data as string);
       setProgress(e.progress);
     };
     ws.onclose = () => {};
@@ -93,6 +112,8 @@ export default function Home() {
     }
     mutation.mutate({ image: image, video: video });
   };
+
+  if (isLoading || isPending) return <h1>ロード中</h1>;
 
   return (
     <main>
