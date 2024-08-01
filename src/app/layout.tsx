@@ -1,5 +1,6 @@
 import GlobalStyle from "@/styles/GlobalStyles";
 import StyledComponentsRegistry from "@/lib/registry";
+import ReactQueryProvider from "@/lib/QueryClientProvider";
 import Wrapper from "@/components/Wrapper";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,12 +17,14 @@ export default function RootLayout({
       </head>
       <body>
         <StyledComponentsRegistry>
-          <GlobalStyle />
-          <Wrapper>
-            <Header />
-            {children}
-            <Footer />
-          </Wrapper>
+          <ReactQueryProvider>
+            <GlobalStyle />
+            <Wrapper>
+              <Header />
+              {children}
+              <Footer />
+            </Wrapper>
+          </ReactQueryProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

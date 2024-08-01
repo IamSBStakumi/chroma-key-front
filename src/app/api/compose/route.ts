@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import getIdTokenFromMetadataServer from "@/utils/getIdTokenFromMetadataServer";
 
-const url = /* `http://localhost:8080` */ `https://chroma-key-api-spbb34bsma-dt.a.run.app`;
+const url = `https://chroma-key-api-spbb34bsma-dt.a.run.app`;
 
 export const GET = async () => {
   const res = await fetch(url);
