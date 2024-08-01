@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
@@ -15,6 +17,50 @@ export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+
+  const {
+    data: token,
+    isLoading,
+    isPending,
+  } = useQuery({
+    queryKey: ["authToken"],
+    queryFn: async () => {
+      const response = await axios("/api/token");
+      console.log(response);
+
+      return response.data.message;
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
+    onMutate: () => setVideoUrl(""),
+    onSuccess: (response) => {
+      setVideoUrl(response);
+      setProgress("0");
+    },
+  });
+
+  useEffect(() => {
+    const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
+
+    ws.onopen = () => {
+      if (token) ws.send(token);
+    };
+    ws.onmessage = (event) => {
+      const e = JSON.parse(event.data as string);
+      setProgress(e.progress);
+    };
+    ws.onclose = () => {};
+
+    const interval = setInterval(() => {
+      if (ws.readyState === ws.OPEN && mutation.isPending) {
+        ws.send("progress");
+      } else {
+        clearInterval(interval);
+      }
+    }, 3000);
+  });
 
   const openModal = (message: string) => {
     setModalMessage(message);
@@ -69,6 +115,8 @@ export default function Home() {
     setFetching(false);
     setVideoUrl(response);
   };
+
+  if (isLoading || isPending) return <h1>ロード中</h1>;
 
   return (
     <main>
