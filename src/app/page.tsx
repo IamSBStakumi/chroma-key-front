@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
@@ -18,6 +19,15 @@ export default function Home() {
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
+  const { data: token } = useQuery({
+    queryKey: ["token"],
+    queryFn: async () => {
+      const token = await axios.get("/api/token");
+
+      return token.data.message;
+    },
+  });
+
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
     onMutate: () => setVideoUrl(""),
@@ -30,9 +40,13 @@ export default function Home() {
   useEffect(() => {
     const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
 
+    ws.onopen = () => {
+      if (token) ws.send(token);
+    };
+
     ws.onmessage = (event) => {
-      const e = JSON.parse(event.data as string);
-      setProgress(e.progress);
+      const e = JSON.parse(event.data);
+      if (e.progress) setProgress(e.progress);
     };
     ws.onclose = () => {};
 
