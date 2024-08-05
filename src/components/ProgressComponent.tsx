@@ -6,14 +6,13 @@ const ProgressComponent = () => {
   const [token, setToken] = useState<string | undefined>();
   const [progress, setProgress] = useState("0");
 
-  const getToken = async () => {
-    const response = await fetch(`/api/token`);
-    const result = await response.json();
-    setToken(result);
-  };
-  getToken();
-
   useEffect(() => {
+    const getToken = async () => {
+      const response = await fetch(`/api/token`);
+      const result = await response.json();
+      setToken(result);
+    };
+    getToken();
     const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
 
     ws.onopen = () => {
