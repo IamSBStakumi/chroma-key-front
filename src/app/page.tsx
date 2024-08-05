@@ -8,7 +8,6 @@ import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
-// import fetchToken from "@/utils/fetchToken";
 import ProgressComponent from "@/components/ProgressComponent";
 
 export default function Home() {
