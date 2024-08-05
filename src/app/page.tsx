@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
+import fetchToken from "@/utils/fetchToken";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -17,17 +17,6 @@ export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-
-  const getToken = async () => {
-    const token = await axios.get("/api/token").then((res) => res.data);
-
-    return token.message;
-  };
-
-  const { data: token } = useQuery({
-    queryKey: ["token"],
-    queryFn: () => getToken(),
-  });
 
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
@@ -39,6 +28,10 @@ export default function Home() {
   });
 
   useEffect(() => {
+    let token: string | Blob | ArrayBufferLike | ArrayBufferView;
+    (async () => {
+      token = await fetchToken();
+    })();
     const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
 
     ws.onopen = () => {
@@ -58,7 +51,7 @@ export default function Home() {
         clearInterval(interval);
       }
     }, 3000);
-  }, [mutation.isPending, token]);
+  }, [mutation.isPending]);
 
   const openModal = (message: string) => {
     setModalMessage(message);
