@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
@@ -8,12 +8,11 @@ import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
-import fetchToken from "@/utils/fetchToken";
+import ProgressComponent from "@/components/ProgressComponent";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
-  const [progress, setProgress] = useState("0");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -23,35 +22,34 @@ export default function Home() {
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
       setVideoUrl(response);
-      setProgress("0");
     },
   });
 
-  useEffect(() => {
-    let token: string | Blob | ArrayBufferLike | ArrayBufferView;
-    (async () => {
-      token = await fetchToken();
-    })();
-    const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
+  // useEffect(() => {
+  //   let token: string | Blob | ArrayBufferLike | ArrayBufferView | undefined;
+  //   (async () => {
+  //     token = await fetchToken();
+  //   })();
+  //   const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
 
-    ws.onopen = () => {
-      ws.send(token);
-    };
+  //   ws.onopen = () => {
+  //     if (token) ws.send(token);
+  //   };
 
-    ws.onmessage = (event) => {
-      const e = JSON.parse(event.data);
-      if (e.progress) setProgress(e.progress);
-    };
-    ws.onclose = () => {};
+  //   ws.onmessage = (event) => {
+  //     const e = JSON.parse(event.data);
+  //     if (e.progress) setProgress(e.progress);
+  //   };
+  //   ws.onclose = () => {};
 
-    const interval = setInterval(() => {
-      if (ws.readyState === ws.OPEN && mutation.isPending) {
-        ws.send("progress");
-      } else {
-        clearInterval(interval);
-      }
-    }, 3000);
-  }, [mutation.isPending]);
+  //   const interval = setInterval(() => {
+  //     if (ws.readyState === ws.OPEN && mutation.isPending) {
+  //       ws.send("progress");
+  //     } else {
+  //       clearInterval(interval);
+  //     }
+  //   }, 3000);
+  // }, [mutation.isPending]);
 
   const openModal = (message: string) => {
     setModalMessage(message);
@@ -114,13 +112,14 @@ export default function Home() {
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
       {mutation.isPending && (
-        <h1>
-          動画を合成中です
-          <br />
-          この処理には時間がかかることがあります
-          <br />
-          進捗率: {progress}%
-        </h1>
+        <>
+          <h2>
+            動画を合成中です
+            <br />
+            この処理には時間がかかることがあります
+          </h2>
+          <ProgressComponent />
+        </>
       )}
       {videoUrl && (
         <div>
