@@ -25,32 +25,6 @@ export default function Home() {
     },
   });
 
-  // useEffect(() => {
-  //   let token: string | Blob | ArrayBufferLike | ArrayBufferView | undefined;
-  //   (async () => {
-  //     token = await fetchToken();
-  //   })();
-  //   const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
-
-  //   ws.onopen = () => {
-  //     if (token) ws.send(token);
-  //   };
-
-  //   ws.onmessage = (event) => {
-  //     const e = JSON.parse(event.data);
-  //     if (e.progress) setProgress(e.progress);
-  //   };
-  //   ws.onclose = () => {};
-
-  //   const interval = setInterval(() => {
-  //     if (ws.readyState === ws.OPEN && mutation.isPending) {
-  //       ws.send("progress");
-  //     } else {
-  //       clearInterval(interval);
-  //     }
-  //   }, 3000);
-  // }, [mutation.isPending]);
-
   const openModal = (message: string) => {
     setModalMessage(message);
     setModalIsOpen(true);
