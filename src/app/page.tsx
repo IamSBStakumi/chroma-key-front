@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useState, useEffect, useCallback } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
@@ -17,6 +18,17 @@ export default function Home() {
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
+  const getToken = async () => {
+    const token = await axios.get("/api/token").then((res) => res.data);
+
+    return token.message;
+  };
+
+  const { data: token } = useQuery({
+    queryKey: ["token"],
+    queryFn: () => getToken(),
+  });
+
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
     onMutate: () => setVideoUrl(""),
@@ -26,23 +38,27 @@ export default function Home() {
     },
   });
 
-  // useEffect(() => {
-  //   const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
+  useEffect(() => {
+    const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
 
-  //   ws.onmessage = (event) => {
-  //     const e = JSON.parse(event.data);
-  //     if (e.progress) setProgress(e.progress);
-  //   };
-  //   ws.onclose = () => {};
+    ws.onopen = () => {
+      ws.send(token);
+    };
 
-  //   const interval = setInterval(() => {
-  //     if (ws.readyState === ws.OPEN && mutation.isPending) {
-  //       ws.send("progress");
-  //     } else {
-  //       clearInterval(interval);
-  //     }
-  //   }, 3000);
-  // });
+    ws.onmessage = (event) => {
+      const e = JSON.parse(event.data);
+      if (e.progress) setProgress(e.progress);
+    };
+    ws.onclose = () => {};
+
+    const interval = setInterval(() => {
+      if (ws.readyState === ws.OPEN && mutation.isPending) {
+        ws.send("progress");
+      } else {
+        clearInterval(interval);
+      }
+    }, 3000);
+  }, [mutation.isPending, token]);
 
   const openModal = (message: string) => {
     setModalMessage(message);
