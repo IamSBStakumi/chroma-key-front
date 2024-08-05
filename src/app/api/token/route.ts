@@ -11,7 +11,9 @@ export async function GET() {
     const headers = await client.getRequestHeaders();
 
     return NextResponse.json({ message: headers.Authorization }, { status: 200 });
-  } catch {
-    return NextResponse.json({ message: "Error has been occurred" }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Error fetch token:", error);
+
+    return NextResponse.json({ message: "Error has been occurred:", error }, { status: 500 });
   }
 }
