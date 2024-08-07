@@ -1,36 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 
-const ProgressComponent = () => {
+const ProgressComponent = ({ ws }: { ws: WebSocket }) => {
   const [progress, setProgress] = useState("0");
 
-  const { data: token, refetch } = useQuery({
-    queryKey: ["token"],
-    queryFn: async () => {
-      const response = await fetch("/api/token", {
-        method: "get",
-      });
-      const result = await response.json();
-
-      return result.message;
-    },
-    gcTime: Infinity,
-    staleTime: Infinity,
-    enabled: false,
-  });
-
   useEffect(() => {
-    if (!token) refetch();
-
-    const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
-    // const ws = new WebSocket("ws://localhost:8080/ws");
-
-    ws.onopen = () => {
-      if (token) ws.send(token);
-    };
-
     ws.onmessage = (event) => {
       const e = JSON.parse(event.data);
       setProgress(e.progress);
