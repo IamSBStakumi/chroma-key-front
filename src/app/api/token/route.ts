@@ -14,6 +14,6 @@ export async function GET() {
   } catch (error: unknown) {
     console.error("Error fetch token:", error);
 
-    return NextResponse.json({ message: "Error has been occurred:", error }, { status: 500 });
+    return NextResponse.json({ message: "Error has been occurred" }, { status: 500 });
   }
 }
