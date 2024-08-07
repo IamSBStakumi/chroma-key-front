@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import useWebSocket from "@/hooks/useWebSocket";
+// import useWebSocket from "@/hooks/useWebSocket";
 
 const ProgressComponent = () => {
   const { data: token, isPending } = useQuery({
@@ -18,9 +18,10 @@ const ProgressComponent = () => {
     staleTime: Infinity,
   });
 
-  const progress = useWebSocket(token);
+  console.log(token);
+  // const progress = useWebSocket(token);
 
-  return <>{isPending ? <h2>接続中...</h2> : <h2>進捗率: {progress}%</h2>}</>;
+  return <>{isPending ? <h2>接続中...</h2> : <h2>進捗率: 0%</h2>}</>;
 };
 
 export default ProgressComponent;
