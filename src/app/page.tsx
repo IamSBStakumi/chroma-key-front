@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
-import axios from "axios";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -17,23 +16,8 @@ export default function Home() {
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  const { data: token, isLoading } = useQuery({
-    queryKey: ["token"],
-    queryFn: async () => {
-      const response = await axios
-        .get("/api/token")
-        .then((res) => res.data)
-        .catch(() => ({ message: "token" }));
-
-      return response.message;
-    },
-    gcTime: Infinity,
-    staleTime: Infinity,
-  });
-
   const mutation = useMutation({
-    mutationFn: ({ image, video, token }: { image: File; video: File; token: string }) =>
-      composeFiles(image, video, token),
+    mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
       setVideoUrl(response);
@@ -87,10 +71,8 @@ export default function Home() {
 
       return;
     }
-    mutation.mutate({ image, video, token });
+    mutation.mutate({ image, video });
   };
-
-  if (isLoading) return <h1>ロード中...</h1>;
 
   return (
     <main>
