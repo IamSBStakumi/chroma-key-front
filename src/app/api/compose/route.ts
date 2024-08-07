@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import fetchToken from "@/utils/fetchToken";
 
 // const url = `http://localhost:8080`;
 const url = `https://chroma-key-api-spbb34bsma-dt.a.run.app`;
@@ -13,8 +14,8 @@ export const GET = async () => {
 
 export async function POST(req: NextRequest) {
   try {
+    const token = fetchToken();
     const formData = await req.formData();
-    const token = req.headers.get("authorization");
     const response = await axios.post(`${url}/compose`, formData, {
       headers: { Authorization: `${token}`, "Content-Type": "multipart/form-data" },
       responseType: "stream",
