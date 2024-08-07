@@ -8,8 +8,8 @@ const useWebSocket = (token: string) => {
   const webSocketRef = useRef<WebSocket>();
 
   useEffect(() => {
-    // const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
-    const ws = new WebSocket("ws://localhost:8080/ws");
+    const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
+    // const ws = new WebSocket("ws://localhost:8080/ws");
 
     webSocketRef.current = ws;
 
