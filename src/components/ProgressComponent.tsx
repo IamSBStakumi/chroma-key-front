@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 const ProgressComponent = () => {
   const [progress, setProgress] = useState("0");
 
-  const { data: token } = useQuery({
+  const { data: token, refetch } = useQuery({
     queryKey: ["token"],
     queryFn: async () => {
       const response = await fetch("/api/token", {
@@ -17,9 +17,13 @@ const ProgressComponent = () => {
       return result.message;
     },
     gcTime: Infinity,
+    staleTime: Infinity,
+    enabled: false,
   });
 
   useEffect(() => {
+    if (!token) refetch();
+
     const ws = new WebSocket("wss://chroma-key-api-spbb34bsma-dt.a.run.app/ws");
     // const ws = new WebSocket("ws://localhost:8080/ws");
 
