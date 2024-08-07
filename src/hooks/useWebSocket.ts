@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -33,7 +32,7 @@ const useWebSocket = (token: string) => {
     return () => {
       if (webSocketRef.current) webSocketRef.current.close();
     };
-  }, []);
+  }, [token]);
 
   return progress;
 };
