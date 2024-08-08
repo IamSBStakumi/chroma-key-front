@@ -17,23 +17,17 @@ export default function Home() {
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  const { data: token, isLoading } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["token"],
     queryFn: async () => {
-      const response = await axios
-        .get("/api/token")
-        .then((res) => res.data)
-        .catch(() => ({ message: "token" }));
-
-      return response.message;
+      await axios.get("/api/token").then((res) => res.data);
     },
     gcTime: Infinity,
     staleTime: Infinity,
   });
 
   const mutation = useMutation({
-    mutationFn: ({ image, video, token }: { image: File; video: File; token: string }) =>
-      composeFiles(image, video, token),
+    mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
       setVideoUrl(response);
@@ -87,7 +81,7 @@ export default function Home() {
 
       return;
     }
-    mutation.mutate({ image, video, token });
+    mutation.mutate({ image, video });
   };
 
   if (isLoading) return <h1>ロード中...</h1>;

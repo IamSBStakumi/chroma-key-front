@@ -1,4 +1,5 @@
 import { GoogleAuth } from "google-auth-library";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -10,10 +11,14 @@ export async function GET() {
 
     const headers = await client.getRequestHeaders();
 
-    return NextResponse.json({ message: headers.Authorization }, { status: 200 });
+    if (headers.Authorization) cookies().set("token", headers.Authorization, { secure: true });
+
+    return NextResponse.json({ message: "Success" });
   } catch (error: unknown) {
     console.error("Error fetch token:", error);
 
-    return NextResponse.json({ message: "Error has been occurred" }, { status: 500 });
+    cookies().set("token", "none", { secure: true });
+
+    return NextResponse.json({ message: "Error", token: cookies().get("token")?.value, error });
   }
 }

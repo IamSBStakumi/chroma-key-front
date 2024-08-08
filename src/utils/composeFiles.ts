@@ -2,12 +2,12 @@
 
 import axios from "axios";
 
-const composeFiles = async (image: File, video: File, token: string) => {
+const composeFiles = async (image: File, video: File) => {
   const formData = new FormData();
   formData.append("image", image);
   formData.append("video", video);
   const response = await axios.post(`/api/compose`, formData, {
-    headers: { Authorization: `${token}`, "Content-Type": "multipart/form-data" },
+    headers: { "Content-Type": "multipart/form-data" },
     responseType: "blob",
   });
 
