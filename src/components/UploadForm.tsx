@@ -11,8 +11,9 @@ const UploadForm: FC<FormProps> = ({ handleChangeImage, handleChangeVideo, handl
     <div>
       <ul>
         <li>
-          <label>背景画像</label>
+          <label htmlFor="image">背景画像</label>
           <input
+            id="image"
             type="file"
             name="image"
             accept=".png, .jpeg, .jpg"
@@ -22,8 +23,9 @@ const UploadForm: FC<FormProps> = ({ handleChangeImage, handleChangeVideo, handl
           />
         </li>
         <li>
-          <label>合成する動画</label>
+          <label htmlFor="video">合成する動画</label>
           <input
+            id="video"
             type="file"
             name="video"
             accept=".mp4"
