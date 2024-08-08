@@ -8,7 +8,6 @@ import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
-import ProgressComponent from "@/components/ProgressComponent";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -94,7 +93,6 @@ export default function Home() {
           </h2>
         </>
       )}
-      <ProgressComponent isPending={mutation.isPending} />
       {videoUrl && (
         <div>
           <a href={videoUrl} download="processed_video.mp4">

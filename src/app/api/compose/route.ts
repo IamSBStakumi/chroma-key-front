@@ -14,7 +14,7 @@ export const GET = async () => {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = fetchToken("compose");
+    const token = fetchToken();
     const formData = await req.formData();
     const response = await axios.post(`${url}/compose`, formData, {
       headers: { Authorization: `${token}`, "Content-Type": "multipart/form-data" },
