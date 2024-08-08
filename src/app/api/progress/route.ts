@@ -7,7 +7,7 @@ const url = `https://chroma-key-api-spbb34bsma-dt.a.run.app`;
 
 export async function GET() {
   try {
-    const token = fetchToken();
+    const token = fetchToken("progress");
     const response = await axios
       .get(`${url}/progress`, {
         headers: { Authorization: `${token}` },
