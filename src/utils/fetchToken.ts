@@ -1,10 +1,10 @@
 import { GoogleAuth } from "google-auth-library";
 
-const fetchToken = async () => {
+const fetchToken = async (endpoint: string) => {
   const googleAuth = new GoogleAuth();
   const url = "https://chroma-key-api-spbb34bsma-dt.a.run.app";
 
-  const client = await googleAuth.getIdTokenClient(url);
+  const client = await googleAuth.getIdTokenClient(`${url}/${endpoint}`);
 
   const headers = await client.getRequestHeaders();
 
