@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/ModalComponents";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
@@ -15,19 +15,6 @@ export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-
-  const { data: message, isLoading } = useQuery({
-    queryKey: ["token"],
-    queryFn: async () => {
-      const result = await fetch("/api/token")
-        .then(async (res) => await res.json())
-        .then((result) => result.message);
-
-      return result;
-    },
-    gcTime: Infinity,
-    staleTime: Infinity,
-  });
 
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
@@ -86,8 +73,6 @@ export default function Home() {
     }
     mutation.mutate({ image, video });
   };
-
-  if (isLoading || !message) return <h2>読み込み中...</h2>;
 
   return (
     <main>
