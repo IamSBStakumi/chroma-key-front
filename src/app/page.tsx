@@ -16,10 +16,14 @@ export default function Home() {
   const [modalMessage, setModalMessage] = useState("");
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  const { isLoading } = useQuery({
+  const { data: message, isLoading } = useQuery({
     queryKey: ["token"],
     queryFn: async () => {
-      await fetch("/api/token").then((res) => res.json());
+      const result = await fetch("/api/token")
+        .then(async (res) => await res.json())
+        .then((result) => result.message);
+
+      return result;
     },
     gcTime: Infinity,
     staleTime: Infinity,
@@ -83,7 +87,7 @@ export default function Home() {
     mutation.mutate({ image, video });
   };
 
-  if (isLoading) return <h2>読み込み中...</h2>;
+  if (isLoading || !message) return <h2>読み込み中...</h2>;
 
   return (
     <main>
