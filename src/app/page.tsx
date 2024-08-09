@@ -8,6 +8,7 @@ import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -91,6 +92,7 @@ export default function Home() {
             <br />
             この処理には時間がかかることがあります
           </h2>
+          <LoadingSpinner />
         </>
       )}
       {videoUrl && (
