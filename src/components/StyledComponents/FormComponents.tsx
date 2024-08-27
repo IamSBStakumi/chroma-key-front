@@ -5,7 +5,7 @@ import styled from "styled-components";
 const LabelText = styled.label`
   /* スマートフォン向け */
   @media (max-width: 768px) {
-    width: 35%;
+    width: 40%;
     font-size: 1.5rem;
     padding: 0.5rem 0;
   }
