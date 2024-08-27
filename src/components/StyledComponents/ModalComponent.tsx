@@ -34,7 +34,7 @@ const StyledModal = styled(Modal)`
   justify-content: space-between;
 `;
 
-const Title = styled.div`
+const ModalTitle = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1.5rem;
@@ -100,4 +100,4 @@ const OKButton = styled.button`
   border-radius: 8px;
 `;
 
-export { StyledModal, Title, ErrorMessage, ModalMessage, OKButton };
+export { StyledModal, ModalTitle, ErrorMessage, ModalMessage, OKButton };
