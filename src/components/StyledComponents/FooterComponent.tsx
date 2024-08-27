@@ -10,7 +10,14 @@ const FooterComponent = styled.footer`
 `;
 
 const FooterText = styled.p`
-  font-size: 1.3rem;
+  /* スマートフォン向け */
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+  /* デスクトップ向け */
+  @media (min-width: 1025px) {
+    font-size: 1.3rem;
+  }
   color: #333;
 `;
 
