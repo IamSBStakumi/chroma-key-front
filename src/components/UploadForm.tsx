@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { LabelText, Input, Button } from "./StyledComponents/FormComponents";
 
 type FormProps = {
   handleChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -8,35 +9,31 @@ type FormProps = {
 
 const UploadForm: FC<FormProps> = ({ handleChangeImage, handleChangeVideo, handleSubmit }) => {
   return (
-    <div>
-      <ul>
-        <li>
-          <label htmlFor="image">背景画像</label>
-          <input
-            id="image"
-            type="file"
-            name="image"
-            accept=".png, .jpeg, .jpg"
-            onChange={(e) => {
-              handleChangeImage(e);
-            }}
-          />
-        </li>
-        <li>
-          <label htmlFor="video">合成する動画</label>
-          <input
-            id="video"
-            type="file"
-            name="video"
-            accept=".mp4"
-            onChange={(e) => {
-              handleChangeVideo(e);
-            }}
-          />
-        </li>
-      </ul>
-      <button onClick={(e) => handleSubmit(e)}>合成開始</button>
-    </div>
+    <>
+      <LabelText htmlFor="image">背景画像</LabelText>
+      <Input
+        id="image"
+        type="file"
+        name="image"
+        accept=".png, .jpeg, .jpg"
+        onChange={(e) => {
+          handleChangeImage(e);
+        }}
+      />
+      <LabelText htmlFor="video">合成する動画</LabelText>
+      <Input
+        id="video"
+        type="file"
+        name="video"
+        accept=".mp4"
+        onChange={(e) => {
+          handleChangeVideo(e);
+        }}
+      />
+      <div style={{ textAlign: "center" }}>
+        <Button onClick={(e) => handleSubmit(e)}>合成開始</Button>
+      </div>
+    </>
   );
 };
 
