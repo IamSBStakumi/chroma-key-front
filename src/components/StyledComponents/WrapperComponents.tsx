@@ -21,7 +21,14 @@ export const LoadWrapper = styled.div`
   text-align: center;
 
   > p {
-    font-size: 88px;
+    /* スマートフォン向け */
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+    /* デスクトップ向け */
+    @media (min-width: 1025px) {
+      font-size: 2.3rem;
+    }
   }
 `;
 
