@@ -1,17 +1,12 @@
 "use client";
 
-import styled from "styled-components";
 import { Skeleton } from "@mui/material";
 import { FC, useEffect, useState } from "react";
+import StyledVideo from "./StyledComponents/StyledVideo";
 
 type PreviewProps = {
   file: File | null;
 };
-
-const StyledVideo = styled.video`
-  margin: auto;
-  width: 300px;
-`;
 
 const PreviewVideo: FC<PreviewProps> = ({ file }) => {
   const [url, setUrl] = useState<string>("");
