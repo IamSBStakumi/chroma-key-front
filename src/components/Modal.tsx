@@ -17,7 +17,7 @@ const DefaultModal: React.FC<AlertProps> = ({ closeModal, modalIsOpen, modalMess
         <ErrorMessage id="modal-title">警告</ErrorMessage>
       </Title>
       <ModalMessage>{modalMessage}</ModalMessage>
-      <OKButton id="okButton" variant="contained" color="primary" onClick={closeModal}>
+      <OKButton id="okButton" onClick={closeModal}>
         OK
       </OKButton>
     </StyledModal>
