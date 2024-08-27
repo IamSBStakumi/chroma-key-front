@@ -15,13 +15,18 @@ export default function Home() {
   const [video, setMovie] = useState<File | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [isDisabledButton, setDisabledButton] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
+      setDisabledButton(false);
       setVideoUrl(response);
+    },
+    onError: () => {
+      setDisabledButton(false);
     },
   });
 
@@ -72,6 +77,7 @@ export default function Home() {
 
       return;
     }
+    setDisabledButton(true);
     mutation.mutate({ image, video });
   };
 
@@ -82,6 +88,7 @@ export default function Home() {
         handleChangeImage={handleChangeImage}
         handleChangeVideo={handleChangeVideo}
         handleSubmit={handleSubmit}
+        isDisabledButton={isDisabledButton}
       />
       <PreviewImage file={image} />
       <PreviewVideo file={video} />

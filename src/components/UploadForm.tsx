@@ -5,9 +5,10 @@ type FormProps = {
   handleChangeImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeVideo: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  isDisabledButton: boolean;
 };
 
-const UploadForm: FC<FormProps> = ({ handleChangeImage, handleChangeVideo, handleSubmit }) => {
+const UploadForm: FC<FormProps> = ({ handleChangeImage, handleChangeVideo, handleSubmit, isDisabledButton }) => {
   return (
     <>
       <LabelText htmlFor="image">背景画像</LabelText>
@@ -30,9 +31,11 @@ const UploadForm: FC<FormProps> = ({ handleChangeImage, handleChangeVideo, handl
           handleChangeVideo(e);
         }}
       />
-      <div style={{ textAlign: "center" }}>
-        <Button onClick={(e) => handleSubmit(e)}>合成開始</Button>
-      </div>
+      {!isDisabledButton && (
+        <div style={{ textAlign: "center" }}>
+          <Button onClick={(e) => handleSubmit(e)}>合成開始</Button>
+        </div>
+      )}
     </>
   );
 };
