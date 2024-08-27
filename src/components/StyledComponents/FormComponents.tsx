@@ -9,6 +9,12 @@ const LabelText = styled.label`
     font-size: 1.5rem;
     padding: 0.5rem 0;
   }
+  /* タブレットなど中間のサイズ */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    width: 30%;
+    font-size: 1.5rem;
+    padding: 0.5rem 0;
+  }
   /* デスクトップ向け */
   @media (min-width: 1025px) {
     width: 35%;
@@ -26,6 +32,12 @@ const Input = styled.input`
     font-size: 1rem;
     margin-left: 0.7rem;
   }
+  /* タブレットなど中間のサイズ */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    width: 50%;
+    font-size: 1.5rem;
+    margin-left: 1.3rem;
+  }
   /* デスクトップ向け */
   @media (min-width: 1025px) {
     width: 50%;
@@ -41,6 +53,12 @@ const Button = styled.button`
     padding: 0.4rem;
     width: 25%;
     margin-top: 1.5rem;
+  }
+  /* タブレットなど中間のサイズ */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
   }
   /* デスクトップ向け */
   @media (min-width: 1025px) {

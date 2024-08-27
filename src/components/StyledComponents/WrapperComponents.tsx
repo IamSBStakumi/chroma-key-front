@@ -25,6 +25,10 @@ export const LoadWrapper = styled.div`
     @media (max-width: 768px) {
       font-size: 1.2rem;
     }
+    /* タブレットなど中間のサイズ */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      font-size: 1.8rem;
+    }
     /* デスクトップ向け */
     @media (min-width: 1025px) {
       font-size: 2.3rem;

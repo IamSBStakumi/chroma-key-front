@@ -6,6 +6,11 @@ const StyledVideo = styled.video`
     width: 50%;
     padding: 1rem;
   }
+  /* タブレットなど中間のサイズ */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    width: 40%;
+    padding: 1.3rem;
+  }
   /* デスクトップ向け */
   @media (min-width: 1025px) {
     width: 40%;

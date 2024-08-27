@@ -11,7 +11,7 @@ const StyledModal = styled(Modal)`
   }
   /* タブレットなど中間のサイズ */
   @media (max-width: 1024px) and (min-width: 769px) {
-    width: 50%;
+    width: 60%;
     height: 30%;
     top: 50%;
     padding: 20px;
