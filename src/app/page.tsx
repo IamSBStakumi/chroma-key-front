@@ -85,7 +85,7 @@ export default function Home() {
       />
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
-      <LoadComponent />
+      {mutation.isPending && <LoadComponent />}
       {videoUrl && (
         <div>
           <a href={videoUrl} download="processed_video.mp4">
