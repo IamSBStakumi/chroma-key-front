@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
-import DefaultModal from "@/components/ModalComponents";
+import DefaultModal from "@/components/Modal";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
