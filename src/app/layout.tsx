@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import GlobalStyle from "@/styles/GlobalStyles";
 import StyledComponentsRegistry from "@/lib/registry";
 import ReactQueryProvider from "@/lib/QueryClientProvider";
-import Wrapper from "@/components/StyledComponents/Wrapper";
+import Wrapper from "@/components/StyledComponents/WrapperComponents";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 

@@ -10,18 +10,4 @@ const HeaderComponent = styled.header`
   border-bottom: solid 1px #eee;
 `;
 
-const Text = styled.h1`
-  /* スマートフォン向け */
-  @media (max-width: 768px) {
-    font-size: 2rem;
-    padding: 0.3rem;
-  }
-  /* デスクトップ向け */
-  @media (min-width: 1025px) {
-    font-size: 3rem;
-    padding: 0.5rem;
-  }
-  color: #333;
-`;
-
-export { HeaderComponent, Text };
+export default HeaderComponent;

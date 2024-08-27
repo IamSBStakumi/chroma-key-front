@@ -1,8 +1,9 @@
-import { HeaderComponent, Text } from "./StyledComponents/HeaderComponent";
+import HeaderComponent from "./StyledComponents/HeaderComponent";
+import { Heading1 } from "./StyledComponents/StyledHeading";
 
 const Header = () => (
   <HeaderComponent>
-    <Text>グリーンバック動画合成</Text>
+    <Heading1>グリーンバック動画合成</Heading1>
   </HeaderComponent>
 );
 
