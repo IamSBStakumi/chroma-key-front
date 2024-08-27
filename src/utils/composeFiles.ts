@@ -6,12 +6,13 @@ const composeFiles = async (image: File, video: File) => {
   const formData = new FormData();
   formData.append("image", image);
   formData.append("video", video);
-  const response = await axios.post(`/api/compose`, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-    responseType: "blob",
-  });
+  const blob = await axios
+    .post(`/api/compose`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      responseType: "blob",
+    })
+    .then((res) => res.data);
 
-  const blob = response.data;
   const url = URL.createObjectURL(blob);
 
   return url;

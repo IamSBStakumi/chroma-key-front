@@ -2,13 +2,13 @@
 
 import { useState, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
-import DefaultModal from "@/components/ModalComponents";
+import DefaultModal from "@/components/Modal";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadComponent from "@/components/LoadComponent";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -85,16 +85,7 @@ export default function Home() {
       />
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
-      {mutation.isPending && (
-        <>
-          <h2>
-            動画を合成中です
-            <br />
-            この処理には時間がかかることがあります
-          </h2>
-          <LoadingSpinner />
-        </>
-      )}
+      {mutation.isPending && <LoadComponent />}
       {videoUrl && (
         <div>
           <a href={videoUrl} download="processed_video.mp4">
