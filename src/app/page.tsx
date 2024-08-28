@@ -49,7 +49,7 @@ export default function Home() {
     if (!input || !input.length) return;
     const file = input[0] as File;
     if (file.type !== "image/png" && file.type !== "image/jpeg") {
-      openModal("アップロードできるのは画像のみです。");
+      openModal("アップロードできるのは画像のみです");
 
       return;
     }
@@ -64,7 +64,7 @@ export default function Home() {
     if (!input || !input.length) return;
     const file = input[0] as File;
     if (!file.type.match("video.mp4")) {
-      openModal("アップロードできるのは動画のみです。");
+      openModal("アップロードできるのは動画のみです");
 
       return;
     }
