@@ -74,7 +74,7 @@ export default function Home() {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (image === null || video === null) {
-      openModal("画像または動画がアップロードされていません");
+      openModal("画像または動画が\nアップロードされていません");
 
       return;
     }

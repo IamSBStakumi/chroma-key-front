@@ -3,11 +3,7 @@ import { LoadWrapper } from "./StyledComponents/WrapperComponents";
 
 const LoadComponent = () => (
   <LoadWrapper>
-    <p>
-      動画を合成中です
-      <br />
-      この処理には時間がかかることがあります
-    </p>
+    <p style={{ whiteSpace: "pre-wrap" }}>{"動画を合成中です\nこの処理には時間がかかることがあります"}</p>
     <LoadingSpinner />
   </LoadWrapper>
 );
