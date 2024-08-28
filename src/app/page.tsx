@@ -2,26 +2,32 @@
 
 import { useState, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
-import DefaultModal from "@/components/ModalComponents";
+import DefaultModal from "@/components/Modal";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadComponent from "@/components/LoadComponent";
+import ComposedVideo from "@/components/ComposedVideo";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [isDisabledButton, setDisabledButton] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
+      setDisabledButton(false);
       setVideoUrl(response);
+    },
+    onError: () => {
+      setDisabledButton(false);
     },
   });
 
@@ -72,6 +78,7 @@ export default function Home() {
 
       return;
     }
+    setDisabledButton(true);
     mutation.mutate({ image, video });
   };
 
@@ -82,27 +89,12 @@ export default function Home() {
         handleChangeImage={handleChangeImage}
         handleChangeVideo={handleChangeVideo}
         handleSubmit={handleSubmit}
+        isDisabledButton={isDisabledButton}
       />
+      {mutation.isPending && <LoadComponent />}
+      {videoUrl && <ComposedVideo videoUrl={videoUrl} />}
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
-      {mutation.isPending && (
-        <>
-          <h2>
-            動画を合成中です
-            <br />
-            この処理には時間がかかることがあります
-          </h2>
-          <LoadingSpinner />
-        </>
-      )}
-      {videoUrl && (
-        <div>
-          <a href={videoUrl} download="processed_video.mp4">
-            ダウンロード
-          </a>
-          <video controls src={videoUrl} />
-        </div>
-      )}
       <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );

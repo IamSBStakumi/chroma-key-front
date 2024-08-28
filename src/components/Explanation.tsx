@@ -1,25 +1,14 @@
-"use client";
-
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  width: 80%;
-  margin: auto;
-  padding: 2.5rem 0 2.5rem 0;
-`;
-
-const Text = styled.h2`
-  font-size: 1.5rem;
-`;
+import { SubWrapper } from "./StyledComponents/WrapperComponents";
+import { Heading2 } from "./StyledComponents/StyledHeading";
 
 const Explanation = () => (
-  <Wrapper>
-    <Text>
+  <SubWrapper>
+    <Heading2>
       グリーンバックの動画と背景画像を
       <br />
       アップロードして、 合成を行うことができます。
-    </Text>
-  </Wrapper>
+    </Heading2>
+  </SubWrapper>
 );
 
 export default Explanation;
