@@ -53,6 +53,7 @@ const Button = styled.button`
     padding: 0.4rem;
     width: 25%;
     margin-top: 1.5rem;
+    font-color: #000;
   }
   /* タブレットなど中間のサイズ */
   @media (max-width: 1024px) and (min-width: 769px) {

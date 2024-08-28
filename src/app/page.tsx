@@ -9,6 +9,7 @@ import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
 import LoadComponent from "@/components/LoadComponent";
+import ComposedVideo from "@/components/ComposedVideo";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -90,17 +91,10 @@ export default function Home() {
         handleSubmit={handleSubmit}
         isDisabledButton={isDisabledButton}
       />
+      {mutation.isPending && <LoadComponent />}
+      {videoUrl && <ComposedVideo videoUrl={videoUrl} />}
       <PreviewImage file={image} />
       <PreviewVideo file={video} />
-      {mutation.isPending && <LoadComponent />}
-      {videoUrl && (
-        <div>
-          <a href={videoUrl} download="processed_video.mp4">
-            ダウンロード
-          </a>
-          <video controls src={videoUrl} />
-        </div>
-      )}
       <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );
