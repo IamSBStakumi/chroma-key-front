@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import fetchToken from "@/utils/fetchToken";
 
-const url = process.env.NEXT_PUBLIC_CLOUDRUN_API_URL as string;
+const url = process.env.NEXT_PUBLIC_REQUEST_URL as string;
 
 export const GET = async () => {
   const res = await fetch(url);
