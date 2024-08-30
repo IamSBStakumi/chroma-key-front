@@ -22,6 +22,7 @@ const FooterText = styled.p`
     font-size: 1.1rem;
   }
   color: #333;
+  white-space: pre-wrap;
 `;
 
 export { FooterComponent, FooterText };
