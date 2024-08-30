@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import fetchToken from "@/utils/fetchToken";
 
-// const url = `http://localhost:8080`;
-const url = `https://chroma-key-api-spbb34bsma-dt.a.run.app`;
+const url = process.env.NEXT_PUBLIC_CLOUDRUN_API_URL as string;
 
 export const GET = async () => {
   const res = await fetch(url);
@@ -14,10 +13,16 @@ export const GET = async () => {
 
 export async function POST(req: NextRequest) {
   try {
+    console.log(url);
+    // 環境によってトークンを取得するか分岐
+    const headers = { Authorization: "", "Content-Type": "multipart/form-data" };
+    if (process.env.NEXT_PUBLIC_IS_PRODUCTION === "true") {
+      headers.Authorization = `${await fetchToken()}`;
+    }
+
     const formData = await req.formData();
-    const token = await fetchToken();
     const response = await axios.post(`${url}/compose`, formData, {
-      headers: { Authorization: `${token}`, "Content-Type": "multipart/form-data" },
+      headers,
       responseType: "stream",
     });
 
