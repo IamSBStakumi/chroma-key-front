@@ -2,7 +2,7 @@ import { GoogleAuth } from "google-auth-library";
 
 const fetchToken = async () => {
   const googleAuth = new GoogleAuth();
-  const url = "https://chroma-key-api-spbb34bsma-dt.a.run.app";
+  const url = process.env.NEXT_PUBLIC_REQUEST_URL as string;
 
   const client = await googleAuth.getIdTokenClient(url);
 
