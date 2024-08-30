@@ -13,7 +13,6 @@ export const GET = async () => {
 
 export async function POST(req: NextRequest) {
   try {
-    console.log(url);
     // 環境によってトークンを取得するか分岐
     const headers = { Authorization: "", "Content-Type": "multipart/form-data" };
     if (process.env.NEXT_PUBLIC_IS_PRODUCTION === "true") {
