@@ -35,6 +35,7 @@ const Heading2 = styled.h2`
   @media (min-width: 1025px) {
     font-size: 2.3rem;
   }
+  white-space: pre-wrap;
 `;
 
 export { Heading1, Heading2 };

@@ -19,7 +19,7 @@ const StyledModal = styled(Modal)`
   /* デスクトップ向け */
   @media (min-width: 1025px) {
     width: 50%;
-    height: 35%;
+    height: 45%;
     padding: 25px;
     top: 50%;
   }
@@ -72,6 +72,7 @@ const ModalMessage = styled.h4`
     margin-bottom: 1rem;
   }
   text-align: center;
+  white-space: pre-wrap;
 `;
 
 const OKButton = styled.button`
