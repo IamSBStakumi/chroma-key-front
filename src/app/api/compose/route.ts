@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import fetchToken from "@/utils/fetchToken";
 
-const url = process.env.NEXT_PUBLIC_REQUEST_URL as string;
+const isDevelop = process.env.NEXT_PUBLIC_IS_DEVELOP;
+const url = isDevelop
+  ? (process.env.NEXT_PUBLIC_REQUEST_URL as string)
+  : "https://chroma-key-api-spbb34bsma-dt.a.run.app";
 
 export const GET = async () => {
   const res = await fetch(url);
@@ -15,7 +18,7 @@ export async function POST(req: NextRequest) {
   try {
     // 環境によってトークンを取得するか分岐
     const headers = { Authorization: "", "Content-Type": "multipart/form-data" };
-    if (process.env.NEXT_PUBLIC_IS_PRODUCTION === "true") {
+    if (!process.env.NEXT_PUBLIC_IS_DEVELOP) {
       headers.Authorization = `${await fetchToken()}`;
     }
 
