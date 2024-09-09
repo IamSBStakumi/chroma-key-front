@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import fetchToken from "@/utils/fetchToken";
 
-const isDevelop = process.env.NEXT_PUBLIC_IS_DEVELOP;
-const url = isDevelop
-  ? (process.env.NEXT_PUBLIC_REQUEST_URL as string)
-  : "https://chroma-key-api-spbb34bsma-dt.a.run.app";
+// const isDevelop = process.env.NEXT_PUBLIC_IS_DEVELOP;
+// const url = isDevelop
+//   ? (process.env.NEXT_PUBLIC_REQUEST_URL as string)
+//   : "https://chroma-key-api-spbb34bsma-dt.a.run.app";
+const url = process.env.NEXT_PUBLIC_REQUEST_URL as string;
 
 export const GET = async () => {
   const res = await fetch(url);
