@@ -2,25 +2,26 @@
 
 import { useState, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { ReportFormWrapper } from "@/components/StyledComponents/WrapperComponents";
+import { PageTitle } from "@/components/StyledComponents/StyledHeading";
+import InputField from "@/components/InputField";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const UserReportForm = () => {
   const [isPosted, setPosted] = useState(false);
   const [message, setMessage] = useState("");
   const titleRef = useRef<HTMLInputElement>(null);
-  const bodyRef = useRef<HTMLInputElement>(null);
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
 
   const postReport = async () => {
     if (!titleRef.current || !bodyRef.current) return;
-    if (titleRef.current.value === "" || bodyRef.current.value === "") {
-      setMessage("タイトルまたは不具合内容が入力されていません");
-
-      return;
-    }
+    const title = titleRef.current.value;
+    const body = bodyRef.current.value;
+    if (title === "" || body === "") return "タイトルまたは不具合の内容が入力されていません";
 
     const response = await fetch("/api/report", {
       method: "POST",
-      body: JSON.stringify({ title: titleRef.current.value, body: bodyRef.current.value }),
+      body: JSON.stringify({ title: title, body: body }),
     })
       .then(async (res) => await res.json())
       .then((data) => data.message);
@@ -38,13 +39,14 @@ const UserReportForm = () => {
   });
 
   return (
-    <div>
-      <input ref={titleRef} />
-      <input ref={bodyRef} />
+    <ReportFormWrapper>
+      <PageTitle>不具合報告ページ</PageTitle>
+      <InputField labelName="概要" inputRef={titleRef} id="title" />
+      <InputField labelName="不具合の内容" inputRef={bodyRef} id="body" />
       {!isPosted && <button onClick={() => mutation.mutate()}>送信</button>}
       {mutation.isPending && <LoadingSpinner />}
-      <h3>{message}</h3>
-    </div>
+      <p>{message}</p>
+    </ReportFormWrapper>
   );
 };
 
