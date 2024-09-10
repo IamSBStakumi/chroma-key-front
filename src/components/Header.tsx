@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { HeaderComponent, Ul, Li } from "./StyledComponents/HeaderComponent";
 import { Heading1 } from "./StyledComponents/StyledHeading";
 
 const Header = () => {
-  const [isHome, setHome] = useState<boolean>(true);
   const router = useRouter();
+  const pathname = usePathname();
+  const [isHome, setHome] = useState<boolean>(pathname === "/");
 
   const toHome = () => {
     if (!isHome) {
