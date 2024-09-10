@@ -1,24 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { HeaderComponent, Ul, Li } from "./StyledComponents/HeaderComponent";
 import { Heading1 } from "./StyledComponents/StyledHeading";
 
 const Header = () => {
-  const [isHome, setHome] = useState<boolean>(true);
   const router = useRouter();
+  const pathname = usePathname();
 
   const toHome = () => {
-    if (!isHome) {
-      setHome(true);
+    if (pathname !== "/") {
       router.push("/");
     }
   };
 
   const toReport = () => {
-    if (isHome) {
-      setHome(false);
+    if (pathname === "/") {
       router.push("/user_report_form");
     }
   };
@@ -29,12 +26,12 @@ const Header = () => {
         <Heading1>グリーンバック動画合成</Heading1>
       </HeaderComponent>
       <Ul>
-        <Li $isActive={!isHome}>
+        <Li $isActive={pathname !== "/"}>
           <button role="tab" onClick={toHome}>
-            ホーム
+            動画合成
           </button>
         </Li>
-        <Li $isActive={isHome}>
+        <Li $isActive={pathname === "/"}>
           <button role="tab" onClick={toReport}>
             不具合の報告
           </button>
