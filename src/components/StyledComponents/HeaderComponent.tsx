@@ -11,6 +11,18 @@ const Ul = styled.ul`
   display: flex;
   padding-left: 0;
 
+  /* スマートフォン向け */
+  @media (max-width: 768px) {
+  }
+  /* タブレットなど中間のサイズ */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 1.7rem;
+  }
+  /* デスクトップ向け */
+  @media (min-width: 1025px) {
+    font-size: 2rem;
+  }
+
   > li {
     position: relative;
     display: block;
