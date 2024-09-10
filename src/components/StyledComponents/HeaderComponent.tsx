@@ -5,7 +5,6 @@ import styled, { css } from "styled-components";
 const HeaderComponent = styled.header`
   background: #22cc22;
   border-top: 3px solid #0c6eb7;
-  border-bottom: solid 1px #eee;
 `;
 
 const Ul = styled.ul`
@@ -39,9 +38,11 @@ const Li = styled.li<{ $isActive: boolean }>`
     ${({ $isActive }) =>
       $isActive &&
       css`
-        color: #ccc;
-        cursor: default;
-        background-color: #eee;
+        cursor: pointer;
+        background-color: #119911;
+        border: 1px solid #888;
+        border-top-color: transparent;
+        border-left-color: transparent;
       `}
   }
 `;
