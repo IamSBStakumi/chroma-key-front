@@ -6,7 +6,7 @@ import { HeaderComponent, Ul, Li } from "./StyledComponents/HeaderComponent";
 import { Heading1 } from "./StyledComponents/StyledHeading";
 
 const Header = () => {
-  const [isHome, setHome] = useState<boolean>(false);
+  const [isHome, setHome] = useState<boolean>(true);
   const router = useRouter();
 
   const toHome = () => {
