@@ -17,12 +17,13 @@ export async function POST(req: NextRequest) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((res: any) => res?.status);
 
-    if (status === 201) return NextResponse.json({ message: "不具合を報告いただきまして、ありがとうございます。" });
+    if (status === 201)
+      return NextResponse.json({ message: "不具合を報告いただきまして、ありがとうございます。", isSuccess: true });
 
-    return NextResponse.json({ message: "申し訳ありませんが、投稿できませんでした。" });
+    return NextResponse.json({ message: "申し訳ありませんが、投稿できませんでした。", isSuccess: false });
   } catch (error: unknown) {
     console.error("Error is occurred:", error);
 
-    return NextResponse.json({ message: "Error:", error }, { status: 500 });
+    return NextResponse.json({ message: `Error: ${error}`, isSuccess: false }, { status: 500 });
   }
 }
