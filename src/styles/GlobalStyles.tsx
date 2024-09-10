@@ -98,6 +98,34 @@ const GlobalStyle = createGlobalStyle`
   [role="button"] {
     cursor: pointer;
   }
+
+  /* ^@input
+  ------------------------------------- */
+  button,
+  input,
+  select,
+  textarea {
+    margin: 0;
+    font: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+
+
+  button {
+    overflow: visible;
+  }
+
+  button,
+  select {
+    text-transform: none;
+  }
+
+  textarea {
+    overflow: auto;
+  }
 `;
 
 export default GlobalStyle;

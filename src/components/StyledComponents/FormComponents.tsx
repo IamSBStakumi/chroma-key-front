@@ -60,6 +60,7 @@ const Button = styled.button`
     font-size: 1.5rem;
     padding: 0.5rem;
     margin-top: 1rem;
+    width: 10%;
   }
   /* デスクトップ向け */
   @media (min-width: 1025px) {
@@ -67,9 +68,8 @@ const Button = styled.button`
     padding: 0.6rem;
     margin-top: 1rem;
   }
-  background-color: #2193ea;
-  border-radius: 10px;
-  border: 1px solid #eee;
+  border-radius: 8px;
+  border: 1px solid #555;
 `;
 
 export { LabelText, Input, Button };

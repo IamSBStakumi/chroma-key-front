@@ -38,4 +38,21 @@ const Heading2 = styled.h2`
   white-space: pre-wrap;
 `;
 
-export { Heading1, Heading2 };
+const PageTitle = styled.h2`
+  /* スマートフォン向け */
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+  }
+  /* タブレットなど中間のサイズ */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 1.9rem;
+    padding: 1.6rem;
+  }
+  /* デスクトップ向け */
+  @media (min-width: 1025px) {
+    font-size: 2.3rem;
+  }
+  white-space: pre-wrap;
+`;
+
+export { Heading1, Heading2, PageTitle };
