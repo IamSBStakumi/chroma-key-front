@@ -3,13 +3,13 @@ import { RefObject } from "react";
 
 const Wrapper = styled.div`
   text-align: left;
-  margin-top: 0.7rem;
+  margin: 0.7rem auto 0 auto;
 `;
 
 const LabelText = styled.label`
   /* スマートフォン向け */
   @media (max-width: 768px) {
-    margin-left: 0.5rem;
+    margin-left: 2.5rem;
   }
   /* タブレットなど中間のサイズ */
   @media (max-width: 1024px) and (min-width: 769px) {
@@ -30,7 +30,7 @@ const LabelText = styled.label`
 const TitleForm = styled.input`
   /* スマートフォン向け */
   @media (max-width: 768px) {
-    margin-left: 1.5rem;
+    margin-left: 3.5rem;
     width: 70%;
   }
   /* タブレットなど中間のサイズ */
@@ -46,7 +46,7 @@ const TitleForm = styled.input`
 const BodyForm = styled.textarea`
   /* スマートフォン向け */
   @media (max-width: 768px) {
-    margin-left: 1.5rem;
+    margin-left: 3.5rem;
     width: 70%;
     min-height: 5rem;
   }

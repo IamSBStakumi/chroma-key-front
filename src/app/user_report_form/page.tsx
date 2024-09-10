@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ReportFormWrapper } from "@/components/StyledComponents/WrapperComponents";
 import { PageTitle } from "@/components/StyledComponents/StyledHeading";
 import InputField from "@/components/InputField";
+import { Button } from "@/components/StyledComponents/FormComponents";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const UserReportForm = () => {
@@ -43,7 +44,7 @@ const UserReportForm = () => {
       <PageTitle>不具合報告ページ</PageTitle>
       <InputField labelName="概要" inputRef={titleRef} id="title" />
       <InputField labelName="不具合の内容" inputRef={bodyRef} id="body" />
-      {!isPosted && <button onClick={() => mutation.mutate()}>送信</button>}
+      {!isPosted && <Button onClick={() => mutation.mutate()}>送信</Button>}
       {mutation.isPending && <LoadingSpinner />}
       <p>{message}</p>
     </ReportFormWrapper>

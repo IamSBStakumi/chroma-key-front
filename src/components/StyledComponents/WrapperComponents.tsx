@@ -38,7 +38,7 @@ export const LoadWrapper = styled.div`
 
 export const ReportFormWrapper = styled.div`
   width: 100%;
-  margin: 0 auto;
+  margin: 1.5rem auto 0 auto;
   text-align: center;
   justify-content: center;
 `;
