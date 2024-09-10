@@ -16,13 +16,12 @@ const UserReportForm = () => {
 
   const postReport = async () => {
     if (!titleRef.current || !bodyRef.current) return;
-    const title = titleRef.current.value;
-    const body = bodyRef.current.value;
-    if (title === "" || body === "") return "タイトルまたは不具合の内容が入力されていません";
+    if (titleRef.current.value === "" || bodyRef.current.value === "")
+      return "タイトルまたは不具合の内容が入力されていません";
 
     const response = await fetch("/api/report", {
       method: "POST",
-      body: JSON.stringify({ title: title, body: body }),
+      body: JSON.stringify({ title: titleRef.current.value, body: bodyRef.current.value }),
     })
       .then(async (res) => await res.json())
       .then((data) => data.message);
