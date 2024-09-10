@@ -60,6 +60,7 @@ const Button = styled.button`
     font-size: 1.5rem;
     padding: 0.5rem;
     margin-top: 1rem;
+    width: 10%;
   }
   /* デスクトップ向け */
   @media (min-width: 1025px) {
