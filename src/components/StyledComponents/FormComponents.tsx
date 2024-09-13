@@ -51,7 +51,7 @@ const Button = styled.button`
   @media (max-width: 768px) {
     font-size: 1rem;
     padding: 0.4rem;
-    width: 25%;
+    width: 24%;
     margin-top: 1.5rem;
     font-color: #000;
   }
@@ -60,7 +60,7 @@ const Button = styled.button`
     font-size: 1.5rem;
     padding: 0.5rem;
     margin-top: 1rem;
-    width: 10%;
+    width: 16%;
   }
   /* デスクトップ向け */
   @media (min-width: 1025px) {
