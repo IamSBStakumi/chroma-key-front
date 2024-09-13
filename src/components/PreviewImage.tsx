@@ -27,7 +27,20 @@ const PreviewImage: FC<PreviewProps> = ({ file }) => {
     };
   }, [file]);
 
-  return file ? isLoading ? <Skeleton /> : <Image src={url} alt={file.name} width={300} height={200} /> : null;
+  return file ? (
+    isLoading ? (
+      <Skeleton />
+    ) : (
+      <Image
+        src={url}
+        alt={file.name}
+        width={300}
+        height={200}
+        sizes="100vw"
+        style={{ width: "50%", height: "auto" }}
+      />
+    )
+  ) : null;
 };
 
 export default PreviewImage;
