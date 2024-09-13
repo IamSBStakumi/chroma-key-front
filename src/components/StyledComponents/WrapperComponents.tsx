@@ -36,6 +36,12 @@ export const LoadWrapper = styled.div`
   }
 `;
 
+export const PreviewWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+`;
+
 export const ReportFormWrapper = styled.div`
   width: 100%;
   margin: 1.5rem auto 0 auto;
