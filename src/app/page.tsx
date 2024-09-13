@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/Modal";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
+import { PreviewWrapper } from "@/components/StyledComponents/WrapperComponents";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
@@ -93,8 +94,10 @@ export default function Home() {
       />
       {mutation.isPending && <LoadComponent />}
       {videoUrl && <ComposedVideo videoUrl={videoUrl} />}
-      <PreviewImage file={image} />
-      <PreviewVideo file={video} />
+      <PreviewWrapper>
+        <PreviewImage file={image} />
+        <PreviewVideo file={video} />
+      </PreviewWrapper>
       <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );
