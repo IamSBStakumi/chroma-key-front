@@ -1,18 +1,14 @@
 # Chroma_key_Front
 
-## 名前案
+[日本語](README.en.md)
 
-- compositor -> compota(コンポタ)
-
-[英語](README-en.md)
-
-## 概要
+## About
 
 This is FrontEnd.
 
-## 技術スタック
+## Tech Stack
 
-### フロントエンド
+### Frontend
 
 ![Next.js Badge](https://img.shields.io/badge/Next%2Ejs-000?logo=nextdotjs&logoColor=fff&style=plastic)
 
@@ -20,17 +16,17 @@ This is FrontEnd.
 
 ![styled-components Badge](https://img.shields.io/badge/styled--components-DB7093?logo=styledcomponents&logoColor=fff&style=plastic)
 
-### テスト
+### Test
 
 ![Jest Badge](https://img.shields.io/badge/Jest-C21325?logo=jest&logoColor=fff&style=plastic)
 
 ![Testing Library Badge](https://img.shields.io/badge/Testing%20Library-E33332?logo=testinglibrary&logoColor=fff&style=plastic)
 
-### 環境構築
+### Environment
 
 ![Docker Badge](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff&style=plastic)
 
-## インフラ
+## Infrastructure
 
 ![Google Cloud Badge](https://img.shields.io/badge/Cloud%20Run-4285F4?logo=googlecloud&logoColor=fff&style=plastic)
 
