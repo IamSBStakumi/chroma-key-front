@@ -4,19 +4,22 @@ import { useRouter, usePathname } from "next/navigation";
 import { HeaderComponent, Ul, Li } from "./StyledComponents/HeaderComponent";
 import { Heading1 } from "./StyledComponents/StyledHeading";
 
+const homePath = "/";
+const reportPath = "/user_report_form";
+
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
 
   const toHome = () => {
-    if (pathname !== "/") {
-      router.push("/");
+    if (pathname !== homePath) {
+      router.push(homePath);
     }
   };
 
   const toReport = () => {
-    if (pathname === "/") {
-      router.push("/user_report_form");
+    if (pathname !== reportPath) {
+      router.push(reportPath);
     }
   };
 
@@ -26,12 +29,12 @@ const Header = () => {
         <Heading1>グリーンバック動画合成</Heading1>
       </HeaderComponent>
       <Ul>
-        <Li $isActive={pathname !== "/"}>
+        <Li $isActive={pathname !== homePath}>
           <button role="tab" onClick={toHome}>
             動画合成
           </button>
         </Li>
-        <Li $isActive={pathname === "/"}>
+        <Li $isActive={pathname !== reportPath}>
           <button role="tab" onClick={toReport}>
             不具合の報告
           </button>
