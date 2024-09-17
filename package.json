@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest --silent --watch",
+    "test": "jest --watch",
     "test:pre-commit": "jest --silent",
     "lint": "next lint",
     "format": "prettier --write --log-level=warn 'src/**/*.{css,js,jsx,ts,tsx,json}'",
