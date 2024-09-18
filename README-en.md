@@ -1,41 +1,37 @@
 # Chroma_key_Front
 
-## 名前案
+[日本語](README.en.md)
 
-- compositor -> compota(コンポタ)
+## URL for this Service
 
-[英語](README-en.md)
+## About
 
-## サービスのURL
+This application allows you to composite an image that serves as a background to a video.
+By using this application, you can easily composite videos on a website.
+To use it, simply upload the video you shot in green background and the image you want to use as a background.
 
-## このアプリについて
+This application is intended for use by people who want to post short videos on video sharing websites, but do not have the equipment, such as a computer or paid editing software, to composite the background.
+Of course, those who do not fall into the above categories are also free to use this service.
 
-このアプリでは、動画に背景となる画像を合成することができます。
-このアプリを使用することで、Webサイト上で簡単に動画の合成を行うことができます。
-使用方法はグリーンバックで撮影した動画と背景にしたい画像をアップロードするだけです。
+Since I do not use a database, I do not store the videos or images used for compositing.
 
-ショート動画をサイトに投稿したいが、背景を合成するためのパソコンや有料の編集ソフトといった機材がないという方に使用していただくことを目的としています。
-もちろん、上記に当てはまらない方にも自由に使用していただけます。
+Currently, only videos using green background are supported, but I am considering expanding the functionality in the future.
 
-データベースを使用していないため、合成に使用する動画や画像を保存することはしていません。
+### Confirmed to Work
 
-現在、グリーンバックを使用した動画にのみ対応していますが、今後機能を拡張していくことを考えています。
+#### Video File
 
-### 動作確認済
+- mp4 file
+  - Video taken on a green background of about 1 minute.
 
-#### 動画
+### Image File
 
-- mp4ファイル
-  - 約1分程度のグリーンバックにおいて撮影された動画
+- png file
+- jpeg file
 
-#### 画像
+## Tech Stack
 
-- pngファイル
-- jpegファイル
-
-## 技術スタック
-
-### フロントエンド
+### Frontend
 
 ![Next.js Badge](https://img.shields.io/badge/Next%2Ejs-000?logo=nextdotjs&logoColor=fff&style=plastic)
 
@@ -43,7 +39,7 @@
 
 ![styled-components Badge](https://img.shields.io/badge/styled--components-DB7093?logo=styledcomponents&logoColor=fff&style=plastic)
 
-### バックエンド
+### Backend
 
 ![Python Badge](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff&style=plastic)
 
@@ -53,23 +49,23 @@
 
 ![NumPy Badge](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=fff&style=plastic)
 
-### テスト
+### Test
 
 ![Jest Badge](https://img.shields.io/badge/Jest-C21325?logo=jest&logoColor=fff&style=plastic)
 
 ![Testing Library Badge](https://img.shields.io/badge/Testing%20Library-E33332?logo=testinglibrary&logoColor=fff&style=plastic)
 
-### 環境構築
+### Environment
 
-#### 共通
+#### Commonness
 
 ![Docker Badge](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff&style=plastic)
 
-#### バックエンドのみ
+#### Backend Only
 
 ![Poetry Badge](https://img.shields.io/badge/Poetry-60A5FA?logo=poetry&logoColor=fff&style=plastic)
 
-## インフラ
+## Infrastructure
 
 ![Google Cloud Badge](https://img.shields.io/badge/Cloud%20Run-4285F4?logo=googlecloud&logoColor=fff&style=plastic)
 
@@ -85,12 +81,12 @@
 
 ![lint-staged](https://img.shields.io/badge/lint--staged-222222.svg?logo=lint-staged&style=plastic)
 
-## スクリーンショット
+## Screen Shots
 
-以下の画面から、動画の合成を行うことができます。
+Video composition can be performed from the following screen.
 
-![動画合成ページ](/Stuff/Compositor.png)
+![Movie Composer Page](/Stuff/Compositor.png)
 
-以下の画面から、不具合や要望を投稿することができます。
+You can submit problems and requests from the following screen.
 
-![不具合報告ページ](/Stuff/ReportForm.png)
+![Report Form Page](/Stuff/ReportForm.png)
