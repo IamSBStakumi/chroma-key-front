@@ -1,8 +1,11 @@
-# Chroma_key_Front
+# COMPOTA
 
-## 名前案
+![LOGO](./Stuff/LOGO.png)
 
-- compositor -> compota(コンポタ)
+## 由来
+
+compositor(動画などの合成をするもの)の響きからcompota(コンポタ)という名前を思いつきました。
+スペイン語圏ではコンポートを指すことがわかったので、ロゴには瓶詰めのコンポートを使用しました。(名前を思いついたときにはコーンポタージュにしようと思っていました。)
 
 [英語](README-en.md)
 
