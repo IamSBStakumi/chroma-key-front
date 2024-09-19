@@ -8,10 +8,11 @@ import Footer from "@/components/Footer";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
-  title: "Compota - 動画編集サイト",
+  title: "Compota - グリーンバック動画合成サイト",
   description:
     "すべて無料・登録不要・インストール不要で使える動画合成サイトです。グリーンバックの動画と背景画像を用意するだけで誰でも簡単に動画の合成を行うことができます。",
-  keywords: "グリーンバック, 動画, 合成, 動画編集, 無料, 画像合成, 作成, フリー, フリーソフト, サイト, アプリ",
+  keywords:
+    "グリーンバック, クロマキー, 動画, 合成, 動画編集, 無料, 画像合成, 作成, フリー, フリーソフト, サイト, アプリ",
 };
 
 export default function RootLayout({
