@@ -49,4 +49,22 @@ export const ReportFormWrapper = styled.div`
   justify-content: center;
 `;
 
+export const LogoWrapper = styled.div`
+  /* スマートフォン向け */
+  @media (max-width: 768px) {
+    width: 15%;
+    padding: 0.2em;
+  }
+  /* タブレットなど中間のサイズ */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    width: 8%;
+    padding: 0.25em 0.25em 0.25em 0.25em;
+  }
+  /* デスクトップ向け */
+  @media (min-width: 1025px) {
+    width: 7%;
+    padding-top: 0.25em;
+  }
+`;
+
 export default Wrapper;

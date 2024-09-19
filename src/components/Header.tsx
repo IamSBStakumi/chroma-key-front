@@ -3,6 +3,9 @@
 import { useRouter, usePathname } from "next/navigation";
 import { HeaderComponent, Ul, Li } from "./StyledComponents/HeaderComponent";
 import { Heading1 } from "./StyledComponents/StyledHeading";
+import { LogoWrapper } from "./StyledComponents/WrapperComponents";
+import Image from "next/image";
+import logo from "./images/logo.png";
 
 const homePath = "/";
 const reportPath = "/user_report_form";
@@ -26,6 +29,16 @@ const Header = () => {
   return (
     <>
       <HeaderComponent>
+        <LogoWrapper>
+          <Image
+            src={logo}
+            alt="compota logo"
+            width={260}
+            height={200}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+        </LogoWrapper>
         <Heading1>グリーンバック動画合成</Heading1>
       </HeaderComponent>
       <Ul>

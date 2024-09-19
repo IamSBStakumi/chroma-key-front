@@ -17,6 +17,9 @@ describe("要素の表示", () => {
   beforeEach(() => {
     render(<Header />);
   });
+  test("ロゴ", () => {
+    expect(screen.getByAltText("compota logo")).toBeInTheDocument();
+  });
   test("タイトル", () => {
     expect(screen.getByRole("heading")).toBeInTheDocument();
   });

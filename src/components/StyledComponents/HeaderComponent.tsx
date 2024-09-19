@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 const HeaderComponent = styled.header`
   background: #22cc22;
   border-top: 3px solid #0c6eb7;
+  display: flex;
 `;
 
 const Ul = styled.ul`
