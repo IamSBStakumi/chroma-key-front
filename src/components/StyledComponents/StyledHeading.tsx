@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Heading1 = styled.h1`
   /* スマートフォン向け */
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.6rem;
     padding: 0.3rem;
   }
   /* タブレットなど中間のサイズ */
