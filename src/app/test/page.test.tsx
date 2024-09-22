@@ -69,7 +69,7 @@ describe("処理部分のテスト", () => {
   // });
   test("動画ファイルを動画フォームにアップロードできる", async () => {
     const MovieInput = screen.getByLabelText("合成する動画");
-    const MovieFile = new File(["movie"], "Movie.mp4", { type: "video.mp4" });
+    const MovieFile = new File(["movie"], "Video.mp4", { type: "video/mp4" });
     await user.upload(MovieInput, MovieFile);
     expect(MovieInput).toHaveValue();
     expect(screen.getByLabelText("preview-video")).toBeInTheDocument();
@@ -98,7 +98,7 @@ describe("処理部分のテスト", () => {
     const ComposeButton = screen.getByRole("button", { name: "合成開始" });
 
     const PngFile = new File(["Image"], "Image.png", { type: "image/png" });
-    const MovieFile = new File(["movie"], "Movie.mp4", { type: "video.mp4" });
+    const MovieFile = new File(["movie"], "Movie.mp4", { type: "video/mp4" });
 
     await user.upload(PictureInput, PngFile);
     await user.upload(MovieInput, MovieFile);

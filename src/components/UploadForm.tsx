@@ -26,7 +26,7 @@ const UploadForm: FC<FormProps> = ({ handleChangeImage, handleChangeVideo, handl
         id="video"
         type="file"
         name="video"
-        accept=".mp4"
+        accept="video/mp4, video/quicktime"
         onChange={(e) => {
           handleChangeVideo(e);
         }}
