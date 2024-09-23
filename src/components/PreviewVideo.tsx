@@ -15,17 +15,11 @@ const PreviewVideo: FC<PreviewProps> = ({ file }) => {
   useEffect(() => {
     if (!file) return;
 
-    let reader: FileReader | null = new FileReader();
-    reader.onloadend = () => {
-      const res = reader!.result;
-      if (res && typeof res === "string") {
-        setUrl(res);
-      }
-    };
-    reader.readAsDataURL(file);
+    let tmpUrl = URL.createObjectURL(file);
+    setUrl(tmpUrl);
 
     return () => {
-      reader = null;
+      tmpUrl = "";
     };
   }, [file]);
 
