@@ -29,7 +29,7 @@ const PreviewVideo: FC<PreviewProps> = ({ file }) => {
     };
   }, [file]);
 
-  return file ? isLoading ? <Skeleton /> : <StyledVideo src={url} aria-label="preview-video" /> : null;
+  return file ? isLoading ? <Skeleton /> : <StyledVideo controls src={url} aria-label="preview-video" /> : null;
 };
 
 export default PreviewVideo;
