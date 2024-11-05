@@ -4,7 +4,6 @@ Dockerfile
 node_modules
 npm-debug.log
 README*.md
-.next
 .git
 
 # 開発環境にあればよい
@@ -29,3 +28,6 @@ chroma-key-secret.json
 
 # README用のファイル
 Stuff
+
+# distroless版を使うならコメントアウトする
+# .next
