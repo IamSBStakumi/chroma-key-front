@@ -5,6 +5,7 @@ node_modules
 npm-debug.log
 README*.md
 .git
+.next
 
 # 開発環境にあればよい
 .vscode
@@ -28,6 +29,3 @@ chroma-key-secret.json
 
 # README用のファイル
 Stuff
-
-# distroless版を使うならコメントアウトする
-# .next
