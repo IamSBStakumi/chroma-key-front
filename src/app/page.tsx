@@ -12,6 +12,8 @@ import composeFiles from "@/utils/composeFiles";
 import LoadComponent from "@/components/LoadComponent";
 import ComposedVideo from "@/components/ComposedVideo";
 
+import BetaCheckBox from "@/components/BetaCheckBox";
+
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
@@ -19,9 +21,10 @@ export default function Home() {
   const [modalMessage, setModalMessage] = useState("");
   const [isDisabledButton, setDisabledButton] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [isChecked, setChecked] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video),
+    mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video, isChecked),
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
       setDisabledButton(false);
@@ -85,9 +88,14 @@ export default function Home() {
     mutation.mutate({ image, video });
   };
 
+  const handleChangeCheckValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(e.target.checked);
+  };
+
   return (
     <main>
       <Explanation />
+      <BetaCheckBox checked={isChecked} handleChangeValue={handleChangeCheckValue} />
       <UploadForm
         handleChangeImage={handleChangeImage}
         handleChangeVideo={handleChangeVideo}
