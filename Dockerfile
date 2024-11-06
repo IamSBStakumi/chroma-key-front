@@ -14,8 +14,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# sharpがないままstandaloneモードでビルドすると警告が出る
-RUN yarn add sharp
 RUN yarn run build
 
 FROM gcr.io/distroless/nodejs20 AS runner
@@ -27,14 +25,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # Copy from build
 COPY --from=builder /app/next.config.mjs ./
-# publicに使用するファイルがあればコピーする
-# COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/.next/standalone ./
 
 USER nonroot
 
-# Run app command
-# CMD ["./node_modules/next/dist/bin/next", "start"]
 # For standalone mode
 CMD ["server.js"]
