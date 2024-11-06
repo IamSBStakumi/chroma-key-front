@@ -4,8 +4,8 @@ Dockerfile
 node_modules
 npm-debug.log
 README*.md
-.next
 .git
+.next
 
 # 開発環境にあればよい
 .vscode
