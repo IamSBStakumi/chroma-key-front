@@ -17,7 +17,7 @@ import BetaCheckBox from "@/components/BetaCheckBox";
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [video, setMovie] = useState<File | null>(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isDisabledButton, setDisabledButton] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -37,11 +37,11 @@ export default function Home() {
 
   const openModal = (message: string) => {
     setModalMessage(message);
-    setModalIsOpen(true);
+    setModalOpen(true);
   };
 
   const closeModal = () => {
-    setModalIsOpen(false);
+    setModalOpen(false);
     setModalMessage("");
   };
 
@@ -108,7 +108,7 @@ export default function Home() {
         <PreviewImage file={image} />
         <PreviewVideo file={video} />
       </PreviewWrapper>
-      <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
+      <DefaultModal isModalOpen={isModalOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );
 }
