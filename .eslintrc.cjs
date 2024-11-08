@@ -11,6 +11,9 @@ module.exports = {
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: "./tsconfig.json",
+  },
   plugins: ["react-refresh", "@typescript-eslint"],
   rules: {
     "no-alert": "error",
@@ -63,5 +66,25 @@ module.exports = {
     ],
 
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+
+    // 命名規則
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        selector: "variable",
+        types: ["number", "string", "array"],
+        format: ["camelCase"],
+      },
+      {
+        selector: "variable",
+        types: ["boolean"],
+        format: ["PascalCase"],
+        prefix: ["is", "has", "enable"],
+      },
+      {
+        selector: "function",
+        format: ["camelCase", "PascalCase"],
+      },
+    ],
   },
 };
