@@ -14,6 +14,9 @@ jest.config.ts
 jest.setup.ts
 .eslintrc.cjs
 .prettierrc.json
+.prettierignore
+.editorconfig
+.stylelintrc.js
 
 # ログファイル
 yarn-error.log*
