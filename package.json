@@ -11,6 +11,7 @@
 		"lint": "next lint",
 		"lint:style": "stylelint --fix '**/*.{css,js,ts,jsx,tsx}'",
 		"format": "prettier --write --log-level=warn 'src/**/*.{css,js,jsx,ts,tsx,json}'",
+		"fix": "yarn lint && yarn lint:style && yarn format",
 		"prepare": "husky"
 	},
 	"engines": {
