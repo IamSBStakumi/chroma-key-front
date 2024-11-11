@@ -1,13 +1,13 @@
 import { GoogleAuth } from "google-auth-library";
 
 const fetchToken = async (url: string) => {
-  const googleAuth = new GoogleAuth();
+	const googleAuth = new GoogleAuth();
 
-  const client = await googleAuth.getIdTokenClient(url);
+	const client = await googleAuth.getIdTokenClient(url);
 
-  const headers = await client.getRequestHeaders();
+	const headers = await client.getRequestHeaders();
 
-  return headers.Authorization;
+	return headers.Authorization;
 };
 
 export default fetchToken;
