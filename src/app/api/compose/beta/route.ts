@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import fetchToken from "@/utils/fetchToken";
 
 const url = process.env.NEXT_PUBLIC_REQUEST_URL as string;
 
 export async function POST(req: NextRequest) {
   try {
-    // 環境によってトークンを取得するか分岐
     const headers = { Authorization: "", "Content-Type": "multipart/form-data" };
-    if (!process.env.NEXT_PUBLIC_IS_DEVELOP) {
-      headers.Authorization = `${await fetchToken(url)}`;
-    }
 
     const formData = await req.formData();
     const response = await axios.post(`${url}/compose/beta`, formData, {
