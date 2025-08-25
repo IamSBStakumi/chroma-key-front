@@ -40,5 +40,3 @@ next-env.d.ts
 # secret-key
 chroma-key-secret.json
 
-# settings for VSCode
-.vscode/*
