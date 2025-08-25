@@ -29,10 +29,18 @@ export async function POST(req: NextRequest) {
     const headers = { Authorization: "", "Content-Type": "multipart/form-data" };
 
     const formData = await req.formData();
-    const response = await axios.post(`${url}/compose`, formData, {
-      headers,
-      responseType: "stream",
-    });
+    const response = await axios
+      .post(`${url}/compose`, formData, {
+        headers,
+        responseType: "stream",
+      })
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error(`Failed to compose video: ${res.statusText}`);
+        }
+
+        return res;
+      });
 
     const webStream = nodeToWeb(response.data);
 
@@ -47,6 +55,6 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error("Error uploading files:", error);
 
-    return NextResponse.json({ message: "Error", error }, { status: 500 });
+    return NextResponse.json({ message: "Error: ", error }, { status: 500 });
   }
 }

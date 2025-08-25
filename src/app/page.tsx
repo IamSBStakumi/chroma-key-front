@@ -20,6 +20,7 @@ export default function Home() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isDisabledButton, setDisabledButton] = useState<boolean>(false);
+  const [visibleError, setVisibleError] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [isChecked, setChecked] = useState(false);
 
@@ -29,9 +30,11 @@ export default function Home() {
     onSuccess: (response) => {
       setDisabledButton(false);
       setVideoUrl(response);
+      setVisibleError(false);
     },
     onError: () => {
       setDisabledButton(false);
+      setVisibleError(true);
     },
   });
 
@@ -103,6 +106,9 @@ export default function Home() {
         isDisabledButton={isDisabledButton}
       />
       {mutation.isPending && <LoadComponent />}
+      {visibleError && (
+        <p className="text-center text-red-500">動画の合成に失敗しました。時間をおいてもう一度お試しください。</p>
+      )}
       {videoUrl && <ComposedVideo videoUrl={videoUrl} />}
       <PreviewWrapper>
         <PreviewImage file={image} />

@@ -15,7 +15,17 @@ const composeFiles = async (image: File, video: File, isChecked: boolean) => {
       headers: { "Content-Type": "multipart/form-data" },
       responseType: "blob",
     })
-    .then((res) => res.data);
+    .then((res) => {
+      if (res.status !== 200) {
+        throw new Error(`Failed to compose video: ${res.statusText}`);
+      }
+
+      return res.data;
+    })
+    .catch((error) => {
+      console.error("Error composing files:", error);
+      throw error;
+    });
 
   const url = URL.createObjectURL(blob);
 
