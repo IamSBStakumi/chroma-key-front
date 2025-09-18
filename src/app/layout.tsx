@@ -21,12 +21,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const nonce = (await headers()).get("x-nonce") || ""; // middlewareで設定したnonceを取得
+  const nonce = (await headers()).get("x-nonce"); // middlewareで設定したnonceを取得
 
   return (
     <html lang="ja">
-      <body>
-        <StyledComponentsRegistry nonce={nonce}>
+      <body nonce={nonce || ""}>
+        <StyledComponentsRegistry nonce={nonce || ""}>
           <ReactQueryProvider>
             <GlobalStyle />
             <Wrapper>

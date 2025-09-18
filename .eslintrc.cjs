@@ -61,7 +61,9 @@ module.exports = {
         allowAsStatement: true, // @typescript-eslint/no-floating-promises ルールを回避するため文としての使用を許可する
       },
     ],
-
+    "@typescript-eslint/lines-between-class-members": "off", // eslint v8.53.0より非推奨のため無効化
+    "@typescript-eslint/no-throw-literal": "off", // eslint v8.53.0より名称が変わったため無効化
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+    "react/require-default-props": "off", // デフォルト引数を使用することが推奨されているため、デフォルトプロパティを必須にしない
   },
 };

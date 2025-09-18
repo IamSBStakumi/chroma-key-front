@@ -5,7 +5,13 @@ import { useServerInsertedHTML } from "next/navigation";
 import React, { useState } from "react";
 import { ServerStyleSheet, StyleSheetManager } from "styled-components";
 
-const StyledComponentsRegistry = ({ children, nonce = "" }: { children: React.ReactNode; nonce?: string }) => {
+const StyledComponentsRegistry = ({
+  children,
+  nonce = "",
+}: {
+  children: React.ReactNode;
+  nonce?: string;
+}) => {
   const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet());
 
   useServerInsertedHTML(() => {
@@ -14,7 +20,7 @@ const StyledComponentsRegistry = ({ children, nonce = "" }: { children: React.Re
       React.isValidElement(child)
         ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
           React.cloneElement(child as React.ReactElement<unknown>, { nonce } as any)
-        : child,
+        : child
     );
 
     return styled;
@@ -24,7 +30,9 @@ const StyledComponentsRegistry = ({ children, nonce = "" }: { children: React.Re
 
   if (typeof window !== "undefined") return <>{children}</>;
 
-  return <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{children}</StyleSheetManager>;
+  return (
+    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{children}</StyleSheetManager>
+  );
 };
 
 export default StyledComponentsRegistry;
