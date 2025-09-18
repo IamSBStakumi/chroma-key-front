@@ -1,7 +1,8 @@
 import Modal from "react-modal";
 import styled from "styled-components";
 
-const StyledModal = styled(Modal)`
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const StyledModal = styled(Modal as any)`
   /* スマートフォン向け */
   @media (max-width: 768px) {
     width: 75%;
