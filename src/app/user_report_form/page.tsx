@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { ReportFormWrapper } from "@/components/StyledComponents/WrapperComponents";
 import { PageTitle } from "@/components/StyledComponents/StyledHeading";
-import InputField from "@/components/InputField";
+import InputTitleField from "@/components/InputTitleField";
+import InputBodyField from "@/components/InputBodyField";
 import { Button } from "@/components/StyledComponents/FormComponents";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
@@ -44,8 +45,8 @@ const UserReportForm = () => {
   return (
     <ReportFormWrapper>
       <PageTitle>不具合報告ページ</PageTitle>
-      <InputField labelName="概要" inputRef={titleRef} id="title" />
-      <InputField labelName="不具合の内容" inputRef={bodyRef} id="body" />
+      <InputTitleField labelName="概要" inputRef={titleRef} id="title" />
+      <InputBodyField labelName="不具合の内容" inputRef={bodyRef} id="body" />
       {!isPosted && !isSuccess && <Button onClick={() => mutation.mutate()}>送信</Button>}
       {mutation.isPending && <LoadingSpinner />}
       <p>{message}</p>
