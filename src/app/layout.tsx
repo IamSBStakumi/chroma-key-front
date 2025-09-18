@@ -1,7 +1,8 @@
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import GlobalStyle from "@/styles/GlobalStyles";
-import StyledComponentsRegistry from "@/lib/registry";
-import ReactQueryProvider from "@/lib/QueryClientProvider";
+import StyledComponentsRegistry from "@/lib/styled-components/registry";
+import ReactQueryProvider from "@/provider/QueryClientProvider";
 import Wrapper from "@/components/StyledComponents/WrapperComponents";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -15,15 +16,17 @@ export const metadata: Metadata = {
     "グリーンバック, クロマキー, 動画, 合成, 動画編集, 無料, 画像合成, 作成, フリー, フリーソフト, サイト, アプリ",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get("x-nonce") || ""; // middlewareで設定したnonceを取得
+
   return (
     <html lang="ja">
       <body>
-        <StyledComponentsRegistry>
+        <StyledComponentsRegistry nonce={nonce}>
           <ReactQueryProvider>
             <GlobalStyle />
             <Wrapper>
