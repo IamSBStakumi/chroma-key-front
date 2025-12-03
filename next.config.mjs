@@ -41,6 +41,7 @@ const nextConfig = {
                   default-src 'self';
                   connect-src 'self';
                   script-src 'self' 'unsafe-inline' ${isDev ? "'unsafe-eval'" : ""};
+                  media-src 'self' blob:;
                   frame-src 'self';
                   style-src 'self' 'unsafe-inline';
                   img-src 'self' blob: data:;
