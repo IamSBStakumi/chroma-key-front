@@ -10,7 +10,12 @@ compositor(動画などの合成をするもの)の響きからcompota(コンポ
 [英語](README-en.md)
 
 ## サービスのページ
+
 [Compota](https://chroma-key-front-1056921343497.asia-northeast2.run.app)
+
+## APIリポジトリ
+
+[Compota API](https://github.com/IamSBStakumi/chroma-key-api)
 
 ## このアプリについて
 
