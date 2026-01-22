@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Octokit } from "octokit";
 
-const octokit = new Octokit({ auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN });
+const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,9 +18,15 @@ export async function POST(req: NextRequest) {
       .then((res: any) => res?.status);
 
     if (status === 201)
-      return NextResponse.json({ message: "不具合を報告いただきまして、ありがとうございます。", isSuccess: true });
+      return NextResponse.json({
+        message: "不具合を報告いただきまして、ありがとうございます。",
+        isSuccess: true,
+      });
 
-    return NextResponse.json({ message: "申し訳ありませんが、投稿できませんでした。", isSuccess: false });
+    return NextResponse.json({
+      message: "申し訳ありませんが、投稿できませんでした。",
+      isSuccess: false,
+    });
   } catch (error: unknown) {
     console.error("Error is occurred:", error);
 
