@@ -33,12 +33,6 @@ export function middleware(req: NextRequest) {
   const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, " ").trim();
 
   const requestHeaders = new Headers(req.headers);
-  requestHeaders.set("X-Frame-Options", "SAMEORIGIN"); // クリックジャッキング対策
-  requestHeaders.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()"); // 不要な権限の制限 カメラ、マイク、位置情報を無効化
-  requestHeaders.set("Referrer-Policy", "strict-origin-when-cross-origin"); // リファラ(参照元URL)の送信ポリシーを制御
-  requestHeaders.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload"); // HTTPS強制
-  requestHeaders.set("X-XSS-Protection", "1; mode=block"); // XSS対策
-  requestHeaders.set("X-Content-Type-Options", "nosniff"); // MIMEタイプのスニッフィング対策 例: スクリプトファイルが画像ファイルとして解釈されるのを防ぐ
 
   requestHeaders.set("x-nonce", nonce); // nonceをレスポンスヘッダーに追加
   requestHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue); // コンテンツセキュリティポリシーの設定
