@@ -10,7 +10,7 @@ import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
 import LoadComponent from "@/components/LoadComponent";
 import ComposedVideo from "@/components/ComposedVideo";
-import BetaCheckBox from "@/components/BetaCheckBox";
+// import BetaCheckBox from "@/components/BetaCheckBox";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -20,7 +20,8 @@ export default function Home() {
   const [isDisabledButton, setDisabledButton] = useState<boolean>(false);
   const [visibleError, setVisibleError] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const [isChecked, setChecked] = useState(false);
+  // const [isChecked, setChecked] = useState(false);
+  const isChecked = false;
 
   const mutation = useMutation({
     mutationFn: ({ image, video }: { image: File; video: File }) =>
@@ -90,9 +91,9 @@ export default function Home() {
     mutation.mutate({ image, video });
   };
 
-  const handleChangeCheckValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
-  };
+  // const handleChangeCheckValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setChecked(e.target.checked);
+  // };
 
   return (
     <main className="relative z-10 px-5 pb-12 max-w-2xl mx-auto">
@@ -102,9 +103,9 @@ export default function Home() {
       </div>
 
       {/* Betaチェックボックス */}
-      <div className="mb-4 animate-slide-up">
+      {/* <div className="mb-4 animate-slide-up">
         <BetaCheckBox checked={isChecked} handleChangeValue={handleChangeCheckValue} />
-      </div>
+      </div> */}
 
       {/* アップロードフォーム */}
       <div className="animate-slide-up">
