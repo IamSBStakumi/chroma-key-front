@@ -1,11 +1,24 @@
 import { Metadata } from "next";
 import { headers } from "next/headers";
-import GlobalStyle from "@/styles/GlobalStyles";
-import StyledComponentsRegistry from "@/lib/styled-components/registry";
+// eslint-disable-next-line camelcase
+import { Geist, Geist_Mono } from "next/font/google";
 import ReactQueryProvider from "@/provider/QueryClientProvider";
-import Wrapper from "@/components/StyledComponents/WrapperComponents";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import NeonBlobs from "@/components/ui/NeonBlobs";
+import GridPattern from "@/components/ui/GridPattern";
+import "@/styles/globals.css";
+
+// Geist フォント設定
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
@@ -25,17 +38,23 @@ export default async function RootLayout({
 
   return (
     <html lang="ja">
-      <body nonce={nonce || ""}>
-        <StyledComponentsRegistry nonce={nonce || ""}>
-          <ReactQueryProvider>
-            <GlobalStyle />
-            <Wrapper>
-              <Header />
-              {children}
-              <Footer />
-            </Wrapper>
-          </ReactQueryProvider>
-        </StyledComponentsRegistry>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        nonce={nonce || ""}
+      >
+        <ReactQueryProvider>
+          {/* 固定背景レイヤー：グリッド＋Neonブロブ */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none">
+            <GridPattern />
+            <NeonBlobs />
+          </div>
+          {/* メインコンテンツ */}
+          <div className="min-h-screen bg-black relative">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </ReactQueryProvider>
       </body>
     </html>
   );

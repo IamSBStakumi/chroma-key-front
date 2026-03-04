@@ -26,7 +26,7 @@ beforeEach(() => {
   render(
     <QueryClientProvider client={queryClient}>
       <Report />
-    </QueryClientProvider>,
+    </QueryClientProvider>
   );
 });
 afterEach(() => {
@@ -36,16 +36,19 @@ afterEach(() => {
 
 describe("要素の表示", () => {
   test("ページタイトル", () => {
+    // UIリニューアル後のページタイトル
     expect(screen.getByText("不具合報告ページ")).toBeInTheDocument();
   });
   test("タイトル入力欄", () => {
     expect(screen.getByText("概要")).toBeInTheDocument();
-    expect(screen.getByLabelText("概要 *")).toBeInTheDocument();
+    // InputTitleFieldのラベルは「概要 *」（スペース付き・spanで区切り）
+    expect(screen.getByLabelText(/概要/)).toBeInTheDocument();
     expect(screen.getByPlaceholderText("適当なタイトルを付けてください"));
   });
   test("内容入力欄", () => {
     expect(screen.getByText("不具合の内容"));
-    expect(screen.getByLabelText("不具合の内容 *")).toBeInTheDocument();
+    // InputBodyFieldのラベルは「不具合の内容 *」
+    expect(screen.getByLabelText(/不具合の内容/)).toBeInTheDocument();
     expect(screen.getByPlaceholderText("要望などもこちらへどうぞ"));
   });
   test("ボタンの確認", () => {
@@ -64,7 +67,7 @@ describe("報告フォームの動作確認", () => {
   });
 
   test("概要のみ入力した状態で送信ボタンをクリックしても、APIリクエストは送らない", async () => {
-    const TitleForm = screen.getByLabelText("概要 *");
+    const TitleForm = screen.getByLabelText(/概要/);
     const PostButton = screen.getByRole("button", { name: "送信" });
     await user.type(TitleForm, "タイトル");
     await user.click(PostButton);
@@ -74,7 +77,7 @@ describe("報告フォームの動作確認", () => {
   });
 
   test("不具合の内容のみ入力した状態で送信ボタンをクリックしても、APIリクエストは送らない", async () => {
-    const BodyForm = screen.getByLabelText("不具合の内容 *");
+    const BodyForm = screen.getByLabelText(/不具合の内容/);
     const PostButton = screen.getByRole("button", { name: "送信" });
     await user.type(BodyForm, "内容内容Contents");
     await user.click(PostButton);
@@ -84,8 +87,8 @@ describe("報告フォームの動作確認", () => {
   });
 
   test("概要および不具合の内容を入力した状態で送信ボタンをクリックすると、APIリクエストを送る", async () => {
-    const TitleForm = screen.getByLabelText("概要 *");
-    const BodyForm = screen.getByLabelText("不具合の内容 *");
+    const TitleForm = screen.getByLabelText(/概要/);
+    const BodyForm = screen.getByLabelText(/不具合の内容/);
     const PostButton = screen.getByRole("button", { name: "送信" });
     await user.type(TitleForm, "タイトル");
     await user.type(BodyForm, "Issue作成が成功した場合、戻るボタンが表示される");
@@ -93,6 +96,7 @@ describe("報告フォームの動作確認", () => {
 
     expect(mockedPostIssue).toHaveBeenCalledTimes(1);
     expect(screen.getByText("テスト用メッセージ")).toBeInTheDocument();
+    // UIリニューアル後の戻るボタン名
     expect(screen.getByRole("button", { name: "戻る" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "送信" })).toBeNull();
   });
@@ -100,12 +104,14 @@ describe("報告フォームの動作確認", () => {
   test("APIリクエストを送りIssue作成が失敗した時、戻るボタンは非表示のまま", async () => {
     mockedPostIssue.mockImplementation(() => {
       return new Promise((resolve) => {
-        resolve({ json: async () => ({ message: "エラー発生。戻るボタンは非表示", isSuccess: false }) });
+        resolve({
+          json: async () => ({ message: "エラー発生。戻るボタンは非表示", isSuccess: false }),
+        });
       });
     });
 
-    const TitleForm = screen.getByLabelText("概要 *");
-    const BodyForm = screen.getByLabelText("不具合の内容 *");
+    const TitleForm = screen.getByLabelText(/概要/);
+    const BodyForm = screen.getByLabelText(/不具合の内容/);
     const PostButton = screen.getByRole("button", { name: "送信" });
     await user.type(TitleForm, "APIリクエスト失敗テスト");
     await user.type(BodyForm, "失敗しているならば、戻るボタンを表示しない");
