@@ -5,13 +5,11 @@ import { useMutation } from "@tanstack/react-query";
 import DefaultModal from "@/components/Modal";
 import Explanation from "@/components/Explanation";
 import UploadForm from "@/components/UploadForm";
-import { PreviewWrapper } from "@/components/StyledComponents/WrapperComponents";
 import PreviewImage from "@/components/PreviewImage";
 import PreviewVideo from "@/components/PreviewVideo";
 import composeFiles from "@/utils/composeFiles";
 import LoadComponent from "@/components/LoadComponent";
 import ComposedVideo from "@/components/ComposedVideo";
-
 import BetaCheckBox from "@/components/BetaCheckBox";
 
 export default function Home() {
@@ -25,7 +23,8 @@ export default function Home() {
   const [isChecked, setChecked] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: ({ image, video }: { image: File; video: File }) => composeFiles(image, video, isChecked),
+    mutationFn: ({ image, video }: { image: File; video: File }) =>
+      composeFiles(image, video, isChecked),
     onMutate: () => setVideoUrl(""),
     onSuccess: (response) => {
       setDisabledButton(false);
@@ -96,24 +95,51 @@ export default function Home() {
   };
 
   return (
-    <main>
-      <Explanation />
-      <BetaCheckBox checked={isChecked} handleChangeValue={handleChangeCheckValue} />
-      <UploadForm
-        handleChangeImage={handleChangeImage}
-        handleChangeVideo={handleChangeVideo}
-        handleSubmit={handleSubmit}
-        isDisabledButton={isDisabledButton}
-      />
+    <main className="relative z-10 px-5 pb-12 max-w-2xl mx-auto">
+      {/* ヒーローセクション */}
+      <div className="pt-8">
+        <Explanation />
+      </div>
+
+      {/* Betaチェックボックス */}
+      <div className="mb-4 animate-slide-up">
+        <BetaCheckBox checked={isChecked} handleChangeValue={handleChangeCheckValue} />
+      </div>
+
+      {/* アップロードフォーム */}
+      <div className="animate-slide-up">
+        <UploadForm
+          handleChangeImage={handleChangeImage}
+          handleChangeVideo={handleChangeVideo}
+          handleSubmit={handleSubmit}
+          isDisabledButton={isDisabledButton}
+        />
+      </div>
+
+      {/* ローディング */}
       {mutation.isPending && <LoadComponent />}
+
+      {/* エラー表示 */}
       {visibleError && (
-        <p className="text-center text-red-500">動画の合成に失敗しました。時間をおいてもう一度お試しください。</p>
+        <div className="mt-4 bg-red-500/10 border border-red-500/30 rounded-2xl p-4 text-center">
+          <p className="text-red-400 text-sm">
+            動画の合成に失敗しました。時間をおいてもう一度お試しください。
+          </p>
+        </div>
       )}
+
+      {/* 合成結果 */}
       {videoUrl && <ComposedVideo videoUrl={videoUrl} />}
-      <PreviewWrapper>
-        <PreviewImage file={image} />
-        <PreviewVideo file={video} />
-      </PreviewWrapper>
+
+      {/* プレビューエリア（画像・動画素材の確認） */}
+      {(image || video) && (
+        <div className="mt-6 flex gap-4 justify-center flex-wrap animate-fade-in">
+          <PreviewImage file={image} />
+          <PreviewVideo file={video} />
+        </div>
+      )}
+
+      {/* モーダル */}
       <DefaultModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalMessage={modalMessage} />
     </main>
   );
