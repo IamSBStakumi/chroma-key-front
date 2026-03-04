@@ -1,33 +1,28 @@
 import { validateFileSize, validateFileType } from "@/utils/validation";
 import { NextRequest, NextResponse } from "next/server";
-import { Readable } from "stream";
-import axios from "axios";
+import { GoogleAuth } from "google-auth-library";
 
-const url = process.env.NEXT_PUBLIC_REQUEST_URL as string;
+const apiUrl = process.env.REQUEST_URL as string;
 
 export const GET = async () => {
-  const res = await fetch(url);
+  const res = await fetch(apiUrl);
   const message = await res.json();
 
   return NextResponse.json({ message: message }, { status: 200 });
 };
 
-function nodeToWeb(nodeStream: Readable): ReadableStream {
-  return new ReadableStream({
-    start(controller) {
-      nodeStream.on("data", (chunk) => controller.enqueue(chunk));
-      nodeStream.on("end", () => controller.close());
-      nodeStream.on("error", (err) => controller.error(err));
-    },
-    cancel() {
-      nodeStream.destroy();
-    },
-  });
-}
-
 export async function POST(req: NextRequest) {
   try {
-    const headers = { Authorization: "", "Content-Type": "multipart/form-data" };
+    // SERVICE_ACCOUNT_JSON の存在確認
+    const serviceAccountJsonString = process.env.SERVICE_ACCOUNT_JSON;
+    if (!serviceAccountJsonString) {
+      console.error("SERVICE_ACCOUNT_JSON が設定されていません");
+
+      return NextResponse.json(
+        { error: "Internal Server Error: Service Account JSON is not configured" },
+        { status: 500 }
+      );
+    }
 
     const formData = await req.formData();
     const image = formData.get("image") as File;
@@ -45,31 +40,66 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "File size exceeds limit" }, { status: 400 });
     }
 
-    const response = await axios
-      .post(`${url}/compose`, formData, {
-        headers,
-        responseType: "stream",
-      })
-      .then((res) => {
-        if (res.status !== 200) {
-          throw new Error(`Failed to compose video: ${res.statusText}`);
+    // IAM認証: NEXT_PUBLIC_USE_MOCK_API が true の場合はスキップ
+    // 本番環境では google-auth-library で対象URL向けの OIDC トークンを取得する
+    const headers: Record<string, string> = {};
+
+    try {
+      if (process.env.NEXT_PUBLIC_USE_MOCK_API !== "true") {
+        const auth = new GoogleAuth({
+          credentials: JSON.parse(serviceAccountJsonString),
+        });
+        const client = await auth.getIdTokenClient(apiUrl);
+        const idToken = await client.idTokenProvider.fetchIdToken(apiUrl);
+        if (idToken) {
+          headers["Authorization"] = `Bearer ${idToken}`;
         }
+      }
+    } catch (authError) {
+      console.warn("Google認証トークンの取得に失敗しましたが、リクエストを継続します:", authError);
+      // ローカル環境等でADCが設定されていない場合でも、とりあえずリクエストは飛ばす
+    }
 
-        return res;
-      });
+    const response = await fetch(`${apiUrl}/compose`, {
+      method: "POST",
+      headers: headers,
+      body: formData,
+      // fetch が formData を送信する際、自動で適切な multipart/form-data の
+      // Content-Type 拡張（boundary）を設定するため、手動でヘッダーは追加しない
+    });
 
-    const webStream = nodeToWeb(response.data);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`API Error: ${response.status} ${response.statusText}`, errorText);
+      // バックエンドから {"error": "..."} というJSONが返ってくる場合もあるため、
+      // 可能な場合はJSONとしてパースして返す
+      try {
+        const errorJson = JSON.parse(errorText);
 
-    return new NextResponse(webStream, {
+        return NextResponse.json(errorJson, { status: response.status });
+      } catch {
+        return NextResponse.json(
+          { error: `APIリクエストに失敗しました: ${response.status}` },
+          { status: response.status }
+        );
+      }
+    }
+
+    // 成功時: バックエンドから StreamingResponse (video/mp4) が返ってくるため、
+    // Jsonとしてパースせず、そのままストリームとしてブラウザにプロキシする
+    const contentType = response.headers.get("Content-Type") || "video/mp4";
+    const contentDisposition =
+      response.headers.get("Content-Disposition") || 'attachment; filename="composed.mp4"';
+
+    return new NextResponse(response.body, {
       status: 200,
       headers: {
-        "Content-Type": "video/mp4",
-        "Content-Disposition": 'attachment; filename="composed.mp4"',
+        "Content-Type": contentType,
+        "Content-Disposition": contentDisposition,
       },
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    console.error("Error uploading files:", error);
+  } catch (error) {
+    console.error("API proxy error:", error);
 
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
