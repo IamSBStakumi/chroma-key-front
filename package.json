@@ -20,15 +20,20 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
+    "@tailwindcss/postcss": "^4.2.1",
     "@tanstack/react-query": "^5.51.16",
     "@tanstack/react-query-next-experimental": "^5.51.16",
+    "autoprefixer": "^10.4.27",
     "axios": "~1.12.0",
+    "lucide-react": "^0.576.0",
     "next": "^15.5.9",
     "octokit": "^4.0.2",
+    "postcss": "^8.5.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-modal": "^3.16.1",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.3.11",
+    "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
